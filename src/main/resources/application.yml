@@ -1,0 +1,14 @@
+app:
+  date:
+    format: yyyy-MM-dd
+spring:
+  datasource:
+    driver-class-name: "org.postgresql.Driver"
+    username: jonas
+    password: abc1234
+    url: "jdbc:postgresql://localhost:5432/parquimetro?createDatabaseIfNotExist=false"
+  web:
+    locale: pt_BR
+  jpa:
+    hibernate:
+      ddl-auto: update
