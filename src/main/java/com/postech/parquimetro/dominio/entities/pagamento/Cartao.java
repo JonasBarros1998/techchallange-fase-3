@@ -3,12 +3,14 @@ package com.postech.parquimetro.dominio.entities.pagamento;
 import com.postech.parquimetro.dominio.entities.enums.TipoDePagamento;
 import jakarta.persistence.*;
 import jakarta.websocket.ClientEndpoint;
+import org.hibernate.annotations.Proxy;
 
 import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Cartao {
+@Proxy(lazy = false)
+sealed abstract class Cartao permits Credito, Debito {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)

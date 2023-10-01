@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "credito")
-public class Credito extends Cartao implements IPagamento {
+public final class Credito extends Cartao implements IPagamento {
 
 	public Credito(String numeroDoCartao, String nomeDoTitularDoCartao, String dataDeVencimento, String codigoDeSeguranca) {
 		super(numeroDoCartao, nomeDoTitularDoCartao, dataDeVencimento, codigoDeSeguranca);

@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "debito")
-public class Debito extends Cartao implements IPagamento {
+public final class Debito extends Cartao implements IPagamento {
 
 	@Column(nullable = false, length = 50)
 	String nomeDaInstituicaoFinanceira;

@@ -11,8 +11,11 @@ import java.util.UUID;
 public class Condutor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	@Column(length = 11, nullable = false, unique = true)
+	private String cpf;
+
+	@Column(nullable = false, unique = true)
+	private UUID id = UUID.randomUUID();
 
 	@Column(length = 70, nullable = false)
 	private String email;
@@ -20,13 +23,11 @@ public class Condutor {
 	@Column(length = 100, nullable = false)
 	private String nome;
 
-	@Column(length = 11, columnDefinition = "char", nullable = false)
-	private String cpf;
-
-	@Column(length = 11, columnDefinition = "char", nullable = false)
+	@Column(length = 11, nullable = false)
 	private String telefone;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(referencedColumnName = "id", updatable = false)
 	private EnderecoDoCondutor enderecoDoCondutor;
 
 	@OneToMany(mappedBy = "condutor")
@@ -38,18 +39,15 @@ public class Condutor {
 	public Condutor(
 		String nome,
 		String cpf,
-		EnderecoDoCondutor enderecoDoCondutor,
-		List<Automovel> automovel,
 		String telefone,
-		String email) {
+		String email,
+		EnderecoDoCondutor enderecoDoCondutor) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.enderecoDoCondutor = enderecoDoCondutor;
-		this.automovel = automovel;
 		this.telefone = telefone;
 		this.email = email;
 	}
-
 
 	public String getNome() {
 		return nome;
@@ -58,6 +56,7 @@ public class Condutor {
 	public String getCpf() {
 		return cpf;
 	}
+
 
 	public EnderecoDoCondutor getEndereco() {
 		return enderecoDoCondutor;

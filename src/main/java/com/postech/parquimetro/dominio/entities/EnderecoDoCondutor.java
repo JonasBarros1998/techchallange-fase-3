@@ -21,20 +21,24 @@ public class EnderecoDoCondutor {
 	@Column(nullable = false, length = 40)
 	String cidade;
 
-	@Column(nullable = false, length = 2, columnDefinition = "char")
+	@Column(nullable = false, length = 2)
 	String estado;
 
-	@Column(nullable = false, length = 40)
+	@Column(nullable = false, length = 8)
+	String cep;
+
+	@Column(nullable = true, length = 40)
 	String complemento;
 
 	public EnderecoDoCondutor() {}
 
-	public EnderecoDoCondutor(String rua, String numero, String cidade, String estado, String complemento) {
+	public EnderecoDoCondutor(String rua, String numero, String cep, String cidade, String estado, String complemento) {
 		this.rua = rua;
 		this.numero = numero;
 		this.cidade = cidade;
 		this.estado = estado;
 		this.complemento = complemento;
+		this.cep = cep;
 	}
 
 	public String getRua() {
@@ -51,6 +55,10 @@ public class EnderecoDoCondutor {
 
 	public String getEstado() {
 		return estado;
+	}
+
+	public String getCep() {
+		return cep;
 	}
 
 	public String getComplemento() {

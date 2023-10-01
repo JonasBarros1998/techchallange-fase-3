@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "pix")
-public class Pix implements IPagamento {
+public final class Pix implements IPagamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)

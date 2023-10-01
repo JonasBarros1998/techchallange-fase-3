@@ -1,6 +1,6 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
-public interface IPagamento {
+public sealed interface IPagamento permits Credito, Debito, Pix {
 
 	IPagamento criarPagamento();
 }
