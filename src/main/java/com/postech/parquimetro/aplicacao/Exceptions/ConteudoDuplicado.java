@@ -1,4 +1,4 @@
-package com.postech.parquimetro.application.Exceptions;
+package com.postech.parquimetro.aplicacao.Exceptions;
 
 public class ConteudoDuplicado extends RuntimeException {
 

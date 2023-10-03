@@ -1,7 +1,6 @@
-package com.postech.parquimetro.application.DTO;
+package com.postech.parquimetro.aplicacao.DTO;
 
 import com.postech.parquimetro.view.form.CondutorForm;
-import com.postech.parquimetro.view.form.EnderecoForm;
 
 public record CondutorDTO(
 	String email,

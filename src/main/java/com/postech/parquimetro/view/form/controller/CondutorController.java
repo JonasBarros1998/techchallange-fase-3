@@ -1,6 +1,6 @@
 package com.postech.parquimetro.view.form.controller;
 
-import com.postech.parquimetro.application.GerenciarCondutores;
+import com.postech.parquimetro.aplicacao.GerenciarCondutores;
 import com.postech.parquimetro.view.form.CondutorForm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

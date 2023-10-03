@@ -1,6 +1,6 @@
 package com.postech.parquimetro.utils;
 
-import com.postech.parquimetro.application.Exceptions.ConteudoDuplicado;
+import com.postech.parquimetro.aplicacao.Exceptions.ConteudoDuplicado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;

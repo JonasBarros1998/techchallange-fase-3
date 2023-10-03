@@ -1,4 +1,4 @@
-package com.postech.parquimetro.application.DTO;
+package com.postech.parquimetro.aplicacao.DTO;
 
 public record EnderecoDTO(
 	String rua,

@@ -1,4 +1,4 @@
-package com.postech.parquimetro.application;
+package com.postech.parquimetro.aplicacao;
 
 import com.postech.parquimetro.dominio.entities.Condutor;
 import com.postech.parquimetro.dominio.entities.pagamento.Credito;

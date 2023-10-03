@@ -1,7 +1,7 @@
-package com.postech.parquimetro.application;
+package com.postech.parquimetro.aplicacao;
 
-import com.postech.parquimetro.application.DTO.CondutorDTO;
-import com.postech.parquimetro.application.Exceptions.ConteudoDuplicado;
+import com.postech.parquimetro.aplicacao.DTO.CondutorDTO;
+import com.postech.parquimetro.aplicacao.Exceptions.ConteudoDuplicado;
 import com.postech.parquimetro.dominio.entities.Condutor;
 import com.postech.parquimetro.dominio.entities.EnderecoDoCondutor;
 import com.postech.parquimetro.infra.repository.CondutorRepository;
