@@ -1,7 +1,7 @@
 package com.postech.parquimetro.application;
 
 import com.postech.parquimetro.application.DTO.CondutorDTO;
-import com.postech.parquimetro.application.Exceptions.NaoFoiPossivelSalvarOConteudo;
+import com.postech.parquimetro.application.Exceptions.ConteudoDuplicado;
 import com.postech.parquimetro.dominio.entities.Condutor;
 import com.postech.parquimetro.dominio.entities.EnderecoDoCondutor;
 import com.postech.parquimetro.infra.repository.CondutorRepository;
@@ -44,7 +44,7 @@ public class GerenciarCondutores {
 			this.condutorRepository.save(condutor);
 			return CondutorDTO.converterCondutorFormParaCondutorDTO(condutorForm);
 		} catch (DataIntegrityViolationException ex) {
-			throw new NaoFoiPossivelSalvarOConteudo("Nao foi possivel salvar o condutor. Verifique se o condutor ja foi salvo em nosso banco de dados");
+			throw new ConteudoDuplicado("Nao foi possivel salvar o condutor. Verifique se o condutor ja foi salvo em nosso banco de dados");
 		} catch (Exception ex) {
 			throw ex;
 		}

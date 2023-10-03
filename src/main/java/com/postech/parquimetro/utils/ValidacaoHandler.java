@@ -1,6 +1,6 @@
 package com.postech.parquimetro.utils;
 
-import com.postech.parquimetro.application.Exceptions.NaoFoiPossivelSalvarOConteudo;
+import com.postech.parquimetro.application.Exceptions.ConteudoDuplicado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -42,8 +42,8 @@ public class ValidacaoHandler {
 	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(NaoFoiPossivelSalvarOConteudo.class)
-	public List<ErroForm> handler(NaoFoiPossivelSalvarOConteudo exception) {
+	@ExceptionHandler(ConteudoDuplicado.class)
+	public List<ErroForm> handler(ConteudoDuplicado exception) {
 		List<ErroForm> erroFormList = new ArrayList<>();
 		ErroForm erroForm = new ErroForm(
 			"NaoFoiPossivelSalvarOConteudo",
