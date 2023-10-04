@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface CondutorRepository extends JpaRepository<Condutor, UUID> {
+public interface CondutorRepository extends JpaRepository<Condutor, String> {
+
 }
