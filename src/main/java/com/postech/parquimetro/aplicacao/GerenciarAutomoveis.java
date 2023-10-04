@@ -1,6 +1,7 @@
 package com.postech.parquimetro.aplicacao;
 
 import com.postech.parquimetro.aplicacao.DTO.AutomovelDTO;
+import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
 import com.postech.parquimetro.dominio.entities.Automovel;
 import com.postech.parquimetro.infra.repository.AutomovelRepository;
 import com.postech.parquimetro.infra.repository.CondutorRepository;
@@ -27,7 +28,7 @@ public class GerenciarAutomoveis {
 
 		var condutor = this.condutorRepository.findById(automovelDTO.condutor())
 			.orElseThrow(() -> {
-				throw new RuntimeException("Condutor nao encontrado");
+				throw new ConteudoNaoEncontrado("Nao foi possivel encontrar o condutor");
 			});
 
 		var automovel = new Automovel(
