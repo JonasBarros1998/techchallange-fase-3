@@ -12,22 +12,22 @@ public class Automovel {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@Column(length = 7, columnDefinition = "char")
+	@Column(length = 7)
 	private String placa;
 
 	@Column(length = 30)
 	private String modelo;
 
-	@Column(length = 10)
-	private String tipoDeVeiculo;
+	@Column(length = 20)
+	private String tipoDoAutomovel;
 
 	@ManyToOne
 	private Condutor condutor;
 
-	public Automovel(String placa, String modelo, String tipoDeVeiculo, Condutor condutor) {
+	public Automovel(String placa, String modelo, String tipoDoAutomovel, Condutor condutor) {
 		this.placa = placa;
 		this.modelo = modelo;
-		this.tipoDeVeiculo = tipoDeVeiculo;
+		this.tipoDoAutomovel = tipoDoAutomovel;
 		this.condutor = condutor;
 	}
 
@@ -45,8 +45,8 @@ public class Automovel {
 		return modelo;
 	}
 
-	public String getTipoDeVeiculo() {
-		return tipoDeVeiculo;
+	public String getTipoDoAutomovel() {
+		return tipoDoAutomovel;
 	}
 
 	public Condutor getCondutor() {
