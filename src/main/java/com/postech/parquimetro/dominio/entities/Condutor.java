@@ -49,6 +49,17 @@ public class Condutor {
 		this.email = email;
 	}
 
+	public Condutor(
+		String nome,
+		String cpf,
+		String telefone,
+		String email) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.email = email;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -74,6 +85,17 @@ public class Condutor {
 		return automovel;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 }
 
 
