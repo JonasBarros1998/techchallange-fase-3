@@ -31,6 +31,13 @@ public class Automovel {
 		this.condutor = condutor;
 	}
 
+	public Automovel(String placa, String modelo, String tipoDoAutomovel) {
+		this.placa = placa;
+		this.modelo = modelo;
+		this.tipoDoAutomovel = tipoDoAutomovel;
+	}
+
+
 	public Automovel() {}
 
 	public UUID getId() {
@@ -51,5 +58,17 @@ public class Automovel {
 
 	public Condutor getCondutor() {
 		return condutor;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public void setTipoDoAutomovel(String tipoDoAutomovel) {
+		this.tipoDoAutomovel = tipoDoAutomovel;
 	}
 }

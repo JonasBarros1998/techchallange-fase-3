@@ -6,8 +6,12 @@ import com.postech.parquimetro.dominio.entities.Automovel;
 import com.postech.parquimetro.infra.repository.AutomovelRepository;
 import com.postech.parquimetro.infra.repository.CondutorRepository;
 import com.postech.parquimetro.view.form.AutomovelForm;
+import com.postech.parquimetro.view.form.EditarAutomovelForm;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class GerenciarAutomoveis {
@@ -41,6 +45,21 @@ public class GerenciarAutomoveis {
 		this.automovelRepository.save(automovel);
 
 		return automovelDTO;
+	}
+
+	@Transactional
+	public EditarAutomovelForm editar(EditarAutomovelForm automovelForm, UUID id) {
+		AutomovelDTO automovelDTO = AutomovelDTO.converterAutomovelFormParaAutomovelDTO(automovelForm);
+
+		Automovel automovel = this.automovelRepository.findById(id)
+			 .orElseThrow(() -> new ConteudoNaoEncontrado("automovel nao encontrado"));
+
+		automovel.setModelo(automovelDTO.modelo());
+		automovel.setPlaca(automovelDTO.placa());
+		automovel.setTipoDoAutomovel(automovelDTO.tipoAutomovel());
+
+		this.automovelRepository.save(automovel);
+		return automovelForm;
 	}
 
 }

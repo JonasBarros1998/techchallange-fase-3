@@ -32,7 +32,7 @@ public class GerenciarEnderecosDosCondutores {
 		var enderecoDTO = EnderecoDTO.converterEnderecoFormParaEnderecoDTO(enderecoForm);
 
 		EnderecoDoCondutor enderecoDoCondutor = this.enderecoDoCondutorRepository.pesquisarPorID(enderecoID)
-			.orElseThrow(() -> new ConteudoNaoEncontrado("Enderedo nao encontrado"));
+			.orElseThrow(() -> new ConteudoNaoEncontrado("Endereco nao encontrado"));
 
 
 		enderecoDoCondutor.setEstado(enderecoDTO.estado());

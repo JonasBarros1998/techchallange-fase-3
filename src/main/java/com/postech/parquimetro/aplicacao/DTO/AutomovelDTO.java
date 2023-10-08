@@ -1,6 +1,7 @@
 package com.postech.parquimetro.aplicacao.DTO;
 
 import com.postech.parquimetro.view.form.AutomovelForm;
+import com.postech.parquimetro.view.form.EditarAutomovelForm;
 
 public record AutomovelDTO(
 	String placa,
@@ -17,4 +18,14 @@ public record AutomovelDTO(
 			automovelForm.condutor()
 		);
 	}
+
+	public static AutomovelDTO converterAutomovelFormParaAutomovelDTO(EditarAutomovelForm automovelForm) {
+		return new AutomovelDTO(
+			automovelForm.placa(),
+			automovelForm.modelo(),
+			automovelForm.tipoDoAutomovel(),
+			null
+		);
+	}
+
 }
