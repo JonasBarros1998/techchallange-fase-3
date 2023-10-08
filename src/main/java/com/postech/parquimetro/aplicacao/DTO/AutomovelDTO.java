@@ -3,11 +3,13 @@ package com.postech.parquimetro.aplicacao.DTO;
 import com.postech.parquimetro.view.form.AutomovelForm;
 import com.postech.parquimetro.view.form.EditarAutomovelForm;
 
+import java.util.UUID;
+
 public record AutomovelDTO(
 	String placa,
 	String modelo,
 	String tipoAutomovel,
-	String condutor
+	UUID condutor
 ) {
 
 	public static AutomovelDTO converterAutomovelFormParaAutomovelDTO(AutomovelForm automovelForm) {

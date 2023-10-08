@@ -30,7 +30,7 @@ public class GerenciarAutomoveis {
 	public AutomovelDTO salvar(AutomovelForm automovelForm) {
 		var automovelDTO = AutomovelDTO.converterAutomovelFormParaAutomovelDTO(automovelForm);
 
-		var condutor = this.condutorRepository.findById(automovelDTO.condutor())
+		var condutor = this.condutorRepository.findCondutorById(automovelDTO.condutor())
 			.orElseThrow(() -> {
 				throw new ConteudoNaoEncontrado("Nao foi possivel encontrar o condutor");
 			});

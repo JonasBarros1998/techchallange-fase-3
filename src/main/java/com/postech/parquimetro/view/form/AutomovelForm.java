@@ -21,5 +21,5 @@ public record AutomovelForm(
 	String tipoDoAutomovel,
 
 	@NotNull(message = "O campo condutor e obrigatorio")
-	String condutor
+	UUID condutor
 ) { }

@@ -6,6 +6,7 @@ import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
 import com.postech.parquimetro.dominio.entities.Condutor;
 import com.postech.parquimetro.dominio.entities.EnderecoDoCondutor;
 import com.postech.parquimetro.infra.repository.CondutorRepository;
+import com.postech.parquimetro.view.DTO.consultaCondutores.ConsultaCondutoresDTO;
 import com.postech.parquimetro.view.form.CondutorForm;
 import com.postech.parquimetro.view.form.EditarCondutorForm;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -49,7 +51,7 @@ public class GerenciarCondutores {
 			this.condutorRepository.save(condutor);
 			return CondutorDTO.converterCondutorFormParaCondutorDTO(condutorForm);
 		} catch (DataIntegrityViolationException ex) {
-			throw new ConteudoDuplicado("Nao foi possivel salvar o condutor. Verifique se o condutor ja foi salvo em nosso banco de dados");
+			throw new ConteudoDuplicado("Condutor duplicado");
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -69,5 +71,18 @@ public class GerenciarCondutores {
 		this.condutorRepository.save(condutor);
 
 		return condutorForm;
+	}
+
+	public List<ConsultaCondutoresDTO> consultarTodosCondutores() {
+		List<Condutor> condutores = this.condutorRepository.pesquisarTodosCondutores();
+		return CondutorDTO.converterCondutorParaConsultaCondutoresDTO(condutores);
+	}
+
+	@Transactional
+	public void remover(UUID condutorID) {
+		Condutor condutor = this.condutorRepository.findCondutorById(condutorID)
+			.orElseThrow(() -> new ConteudoNaoEncontrado("condutor nao encontrado"));
+
+		this.condutorRepository.deleteById(condutor.getCpf());
 	}
 }

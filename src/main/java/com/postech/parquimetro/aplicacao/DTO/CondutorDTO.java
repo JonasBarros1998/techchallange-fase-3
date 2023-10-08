@@ -1,7 +1,12 @@
 package com.postech.parquimetro.aplicacao.DTO;
 
+import com.postech.parquimetro.dominio.entities.Condutor;
+import com.postech.parquimetro.view.DTO.consultaCondutores.ConsultaAutomoveisDoCondutorDTO;
+import com.postech.parquimetro.view.DTO.consultaCondutores.ConsultaCondutoresDTO;
 import com.postech.parquimetro.view.form.CondutorForm;
 import com.postech.parquimetro.view.form.EditarCondutorForm;
+
+import java.util.List;
 
 
 public class CondutorDTO {
@@ -49,6 +54,38 @@ public class CondutorDTO {
 			condutorForm.email(),
 			condutorForm.nome(),
 			condutorForm.telefone());
+	}
+
+	public static List<ConsultaCondutoresDTO> converterCondutorParaConsultaCondutoresDTO(List<Condutor> condutores) {
+		return condutores.stream().map((condutor) -> {
+
+			var endereco = new EnderecoDTO(
+				condutor.getEndereco().getRua(),
+				condutor.getEndereco().getNumero(),
+				condutor.getEndereco().getCidade(),
+				condutor.getEndereco().getEstado(),
+				condutor.getEndereco().getNumero(),
+				condutor.getEndereco().getComplemento()
+			);
+
+			List<ConsultaAutomoveisDoCondutorDTO> automoveis = condutor.getAutomovel().stream().map((automovel) ->
+				new ConsultaAutomoveisDoCondutorDTO(
+					automovel.getPlaca(),
+					automovel.getModelo(),
+					automovel.getTipoDoAutomovel(),
+					automovel.getId())
+			).toList();
+
+			return new ConsultaCondutoresDTO(
+				condutor.getId(),
+				condutor.getEmail(),
+				condutor.getNome(),
+				condutor.getTelefone(),
+				endereco,
+				automoveis
+			);
+
+		}).toList();
 	}
 
 	public String getEmail() {

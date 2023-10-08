@@ -26,11 +26,11 @@ public class Condutor {
 	@Column(length = 11, nullable = false)
 	private String telefone;
 
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
 	@JoinColumn(referencedColumnName = "id", updatable = false)
 	private EnderecoDoCondutor enderecoDoCondutor;
 
-	@OneToMany(mappedBy = "condutor")
+	@OneToMany(mappedBy = "condutor", cascade = CascadeType.REMOVE)
 	List<Automovel> automovel;
 
 	public Condutor() {
@@ -58,6 +58,10 @@ public class Condutor {
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.email = email;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 
 	public String getNome() {
