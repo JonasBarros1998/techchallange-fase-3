@@ -74,7 +74,7 @@ public class GerenciarCondutores {
 	}
 
 	public List<ConsultaCondutoresDTO> consultarTodosCondutores() {
-		List<Condutor> condutores = this.condutorRepository.pesquisarTodosCondutores();
+		List<Condutor> condutores = this.condutorRepository.pesquisarPorTodosCondutores();
 		return CondutorDTO.converterCondutorParaConsultaCondutoresDTO(condutores);
 	}
 

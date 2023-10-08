@@ -62,4 +62,8 @@ public class GerenciarAutomoveis {
 		return automovelForm;
 	}
 
+	public void remover(UUID id) {
+		this.automovelRepository.deleteById(id);
+	}
+
 }

@@ -12,8 +12,10 @@ public interface CondutorRepository extends JpaRepository<Condutor, String> {
 
 	Optional<Condutor> findCondutorById(UUID id);
 
-	@Query(value = "select condutor, automovel, endereco " +
-		"from Condutor condutor, EnderecoDoCondutor endereco, Automovel automovel")
-	List<Condutor> pesquisarTodosCondutores();
+	@Query(value = "select condutor " +
+		"from Condutor condutor " +
+		"left join condutor.enderecoDoCondutor endereco " +
+		"left join condutor.automovel automovel")
+	List<Condutor> pesquisarPorTodosCondutores();
 
 }
