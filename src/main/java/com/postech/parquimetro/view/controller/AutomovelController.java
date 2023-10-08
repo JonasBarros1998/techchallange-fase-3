@@ -1,4 +1,4 @@
-package com.postech.parquimetro.view.form.controller;
+package com.postech.parquimetro.view.controller;
 
 import com.postech.parquimetro.aplicacao.DTO.AutomovelDTO;
 import com.postech.parquimetro.aplicacao.GerenciarAutomoveis;
