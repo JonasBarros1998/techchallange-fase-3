@@ -3,6 +3,7 @@ package com.postech.parquimetro.aplicacao.DTO;
 import com.postech.parquimetro.view.form.CondutorForm;
 import com.postech.parquimetro.view.form.EditarCondutorForm;
 
+
 public class CondutorDTO {
 
 	private String email;
