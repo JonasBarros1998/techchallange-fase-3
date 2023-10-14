@@ -1,8 +1,6 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
-import com.postech.parquimetro.dominio.entities.enums.TipoDePagamento;
 import jakarta.persistence.*;
-import jakarta.websocket.ClientEndpoint;
 import org.hibernate.annotations.Proxy;
 
 import java.util.UUID;
@@ -14,25 +12,25 @@ sealed abstract class Cartao permits Credito, Debito {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID uuid;
+	private UUID id;
 
-	@Column(length = 16, nullable = false, columnDefinition = "char")
+	@Column(length = 16, nullable = false, unique = true)
 	private String numeroDoCartao;
 
-	@Column(length = 20, nullable = false)
-	private String nomeDoTitularDoCartao;
+	@Column(length = 30, nullable = false)
+	private String nomeDoTitular;
 
-	@Column(length = 6, nullable = false, columnDefinition = "char")
+	@Column(length = 7, nullable = false)
 	private String dataDeVencimento;
 
-	@Column(length = 3, columnDefinition = "char", nullable = false)
+	@Column(length = 3, nullable = false, unique = true)
 	private String codigoDeSeguranca;
 
 	public Cartao() {}
 
-	public Cartao(String numeroDoCartao, String nomeDoTitularDoCartao, String dataDeVencimento, String codigoDeSeguranca) {
+	public Cartao(String numeroDoCartao, String nomeDoTitular, String dataDeVencimento, String codigoDeSeguranca) {
 		this.numeroDoCartao = numeroDoCartao;
-		this.nomeDoTitularDoCartao = nomeDoTitularDoCartao;
+		this.nomeDoTitular = nomeDoTitular;
 		this.dataDeVencimento = dataDeVencimento;
 		this.codigoDeSeguranca = codigoDeSeguranca;
 	}
@@ -41,8 +39,8 @@ sealed abstract class Cartao permits Credito, Debito {
 		return numeroDoCartao;
 	}
 
-	public String getNomeDoTitularDoCartao() {
-		return nomeDoTitularDoCartao;
+	public String getNomeDoTitular() {
+		return nomeDoTitular;
 	}
 
 	public String getDataDeVencimento() {

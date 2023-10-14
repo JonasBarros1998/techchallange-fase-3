@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class ValidacaoHandler {
@@ -48,6 +49,18 @@ public class ValidacaoHandler {
 		ErroForm erroForm = new ErroForm(
 			"NaoFoiPossivelSalvarOConteudo",
 			exception.getMessage());
+		erroFormList.add(erroForm);
+
+		return erroFormList;
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(NoSuchElementException.class)
+	public List<ErroForm> handler(NoSuchElementException exception) {
+		List<ErroForm> erroFormList = new ArrayList<>();
+		ErroForm erroForm = new ErroForm(
+			"metodoDePagamento",
+			"O campo metodoDePagamento deve conter os seguintes valores: CREDITO, DEBITO ou PIX");
 		erroFormList.add(erroForm);
 
 		return erroFormList;

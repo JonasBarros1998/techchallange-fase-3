@@ -1,15 +1,17 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "debito")
-public final class Debito extends Cartao implements IPagamento {
+public final class Debito extends Cartao implements IPagamento<Debito> {
 
 	@Column(nullable = false, length = 50)
 	String nomeDaInstituicaoFinanceira;
+
+	@OneToOne(orphanRemoval = true, optional = false)
+	@JoinColumn(referencedColumnName = "id", name = "metodo_de_pagamento_id")
+	MetodoDePagamento metodoDePagamento;
 
 	public Debito(
 		String numeroDoCartao,
@@ -25,13 +27,17 @@ public final class Debito extends Cartao implements IPagamento {
 		super();
 	}
 
-	public String getNomeDaInstituicaoFinanceira() {
+	public String getnomeDaInstituicaoFinanceira() {
 		return nomeDaInstituicaoFinanceira;
 	}
 
-
 	@Override
-	public IPagamento criarPagamento() {
+	public Debito criarPagamento() {
 		return this;
 	}
+
+	public void setMetodoDePagamento(MetodoDePagamento metodoDePagamento) {
+		this.metodoDePagamento = metodoDePagamento;
+	}
+
 }

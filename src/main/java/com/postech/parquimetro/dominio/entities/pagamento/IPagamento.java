@@ -1,6 +1,9 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
-public sealed interface IPagamento permits Credito, Debito, Pix {
+import org.springframework.stereotype.Component;
 
-	IPagamento criarPagamento();
+
+public sealed interface IPagamento<T> permits Credito, Debito, Pix {
+
+	T criarPagamento();
 }

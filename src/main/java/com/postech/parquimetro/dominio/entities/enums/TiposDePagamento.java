@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.stream.Stream;
 
-public enum TipoDePagamento {
+public enum TiposDePagamento {
 
 	PIX("PIX"),
 	CREDITO("CREDITO"),
@@ -13,13 +13,13 @@ public enum TipoDePagamento {
 
 	private final String tipoDePagamento;
 
-	TipoDePagamento(String tipoDePagamento) {
+	TiposDePagamento(String tipoDePagamento) {
 		this.tipoDePagamento = tipoDePagamento;
 	}
 
 	@JsonCreator
-	public static TipoDePagamento decode(final String tipo) {
-		return Stream.of(TipoDePagamento.values())
+	public static TiposDePagamento decode(final String tipo) {
+		return Stream.of(TiposDePagamento.values())
 			.filter(targetEnum -> targetEnum.tipoDePagamento.equals(tipo))
 			.findFirst()
 			.orElseThrow();

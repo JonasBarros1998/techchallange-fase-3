@@ -1,9 +1,11 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
 import com.postech.parquimetro.dominio.entities.Condutor;
+import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +14,7 @@ public class MetodoDePagamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID uuid;
+	private UUID id;
 
 	@ManyToOne
 	private Condutor condutor;
@@ -23,63 +25,33 @@ public class MetodoDePagamento {
 	@Column(nullable = false)
 	private LocalDateTime ultimaEdicao = LocalDateTime.now();
 
-	@Column(nullable = false, length = 20)
-	private String metodoDePagamento;
+	@Column(nullable = false, length = 20, name = "tipo_de_pagamento")
+	@Enumerated(EnumType.STRING)
+	private TiposDePagamento tiposDePagamento;
+
+	@OneToOne(mappedBy = "metodoDePagamento", cascade = CascadeType.ALL)
+	private Debito debito;
+
+	@OneToOne(mappedBy = "metodoDePagamento", cascade = CascadeType.ALL)
+	private Credito credito;
+
+	@OneToOne(mappedBy = "metodoDePagamento", cascade = CascadeType.ALL)
+	private Pix pix;
 
 	@Transient
 	private IPagamento pagamento;
 
-	/*
-	@JoinColumn(columnDefinition = "metodo_pagamento_id", unique = true)
-	@OneToOne(targetEntity = Credito.class)
-	@Column(insertable = false, updatable = false)
-	private Credito credito;
+	protected MetodoDePagamento() {}
 
-	@JoinColumn(columnDefinition = "metodo_pagamento_id", unique = true)
-	@OneToOne(targetEntity = Debito.class)
-	@Column(insertable = false, updatable = false)
-	private Debito debito;
-
-	@JoinColumn(columnDefinition = "metodo_pagamento_id", unique = true)
-	@OneToOne(targetEntity = Pix.class)
-	@Column(insertable = false, updatable = false)
-	private Pix pix;*/
-
-	public MetodoDePagamento() {}
-
-	/*
-	public MetodoDePagamento(Condutor condutor, LocalDateTime dataCadastro, String metodoDePagamento, IPagamento pagamento) {
+	public MetodoDePagamento(Condutor condutor, TiposDePagamento tiposDePagamento, IPagamento pagamento) {
 		this.condutor = condutor;
-		this.dataCadastro = dataCadastro;
-		this.metodoDePagamento = metodoDePagamento;
+		this.tiposDePagamento = tiposDePagamento;
 		this.pagamento = pagamento;
-	}*/
-
-	public MetodoDePagamento(Condutor condutor, LocalDateTime dataCadastro, String metodoDePagamento, IPagamento pagamento) {
-		this.condutor = condutor;
-		this.dataCadastro = dataCadastro;
-		this.metodoDePagamento = metodoDePagamento;
-		this.pagamento = pagamento;
+		this.identificarTipoDePagamento();
 	}
 
-	/*
-	public MetodoDePagamento(Condutor condutor, LocalDateTime dataCadastro, String metodoDePagamento, Debito debito) {
-		this.condutor = condutor;
-		this.dataCadastro = dataCadastro;
-		this.metodoDePagamento = metodoDePagamento;
-		this.debito = debito;
-	}*/
-
-	/*
-	public MetodoDePagamento(Condutor condutor, LocalDateTime dataCadastro, String metodoDePagamento, Pix pix) {
-		this.condutor = condutor;
-		this.dataCadastro = dataCadastro;
-		this.metodoDePagamento = metodoDePagamento;
-		this.pix = pix;
-	}*/
-
 	public UUID getUuid() {
-		return uuid;
+		return id;
 	}
 
 	public Condutor getCondutor() {
@@ -90,24 +62,29 @@ public class MetodoDePagamento {
 		return dataCadastro;
 	}
 
-	public String getMetodoDePagamento() {
-		return metodoDePagamento;
+	public TiposDePagamento getTiposDePagamento() {
+		return tiposDePagamento;
 	}
 
-	public IPagamento getPagamento() {
-		return pagamento;
+	public UUID getId() {
+		return id;
 	}
 
-	/*
-	public Credito getCredito() {
-		return credito;
-	}
+	private void identificarTipoDePagamento() {
+		Map<Class<?>, Runnable> mappper = new HashMap<>();
 
-	public Debito getDebito() {
-		return debito;
-	}
+		mappper.put(Credito.class, () -> {
+			this.credito = (Credito) this.pagamento.criarPagamento();
+		});
 
-	public Pix getPix() {
-		return pix;
-	}*/
+		mappper.put(Debito.class, () -> {
+			this.debito = (Debito) this.pagamento.criarPagamento();
+		});
+
+		mappper.put(Pix.class, () -> {
+			this.pix = (Pix) this.pagamento.criarPagamento();
+		});
+
+		mappper.get(this.pagamento.criarPagamento().getClass()).run();
+	}
 }
