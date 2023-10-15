@@ -8,6 +8,10 @@ import java.util.UUID;
 @Table(name = "pix")
 public final class Pix implements IPagamento<Pix> {
 
+	public UUID getId() {
+		return id;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;

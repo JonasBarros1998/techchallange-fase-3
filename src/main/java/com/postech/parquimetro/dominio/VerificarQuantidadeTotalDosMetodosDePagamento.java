@@ -1,7 +1,7 @@
 package com.postech.parquimetro.dominio;
 
 import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
-import com.postech.parquimetro.dominio.entities.projections.ConsultaTodosOsMetodosDePagamentoDoCondutor;
+import com.postech.parquimetro.dominio.entities.projections.ConsultaTodosOsTiposDePagamentoDoCondutor;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ public class VerificarQuantidadeTotalDosMetodosDePagamento {
 	 * @param metodoDePagamento
 	 * @return Boolean
 	 * */
-	public Boolean podeRemoverMetodoDePagamento(List<ConsultaTodosOsMetodosDePagamentoDoCondutor> metodoDePagamento, TiposDePagamento tipoDePagamento) {
+	public Boolean podeRemoverMetodoDePagamento(List<ConsultaTodosOsTiposDePagamentoDoCondutor> metodoDePagamento, TiposDePagamento tipoDePagamento) {
 
 		if (TiposDePagamento.PIX.name().equals(tipoDePagamento.name())) {
 			return true;
 		}
 
-		List<ConsultaTodosOsMetodosDePagamentoDoCondutor> metodosDePagamentoCadastrados =
+		List<ConsultaTodosOsTiposDePagamentoDoCondutor> metodosDePagamentoCadastrados =
 			metodoDePagamento.stream().filter(metodo -> {
 				return metodo.getTiposDePagamento().equals(TiposDePagamento.CREDITO) ||
 					metodo.getTiposDePagamento().equals(TiposDePagamento.DEBITO);

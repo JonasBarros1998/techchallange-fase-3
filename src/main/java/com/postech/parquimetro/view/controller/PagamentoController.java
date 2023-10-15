@@ -2,11 +2,13 @@ package com.postech.parquimetro.view.controller;
 
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.CreditoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.DebitoDTO;
+import com.postech.parquimetro.aplicacao.DTO.pagamentos.ListarTodosOsMetodosDePagamentoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.PixDTO;
 import com.postech.parquimetro.aplicacao.pagamento.GerenciarPagamento;
 import com.postech.parquimetro.view.form.pagamentos.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.Repository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,9 +57,15 @@ public class PagamentoController {
 	}
 
 	@DeleteMapping(value = "/metodoDePagamento/{metodoDePagamentoID}")
-	public ResponseEntity<Void> RemoverMetodoDePagamento(@PathVariable UUID metodoDePagamentoID) {
+	public ResponseEntity<Void> removerMetodoDePagamento(@PathVariable UUID metodoDePagamentoID) {
 		this.gerenciarPagamento.removerMetodoDePagamento(metodoDePagamentoID);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ListarTodosOsMetodosDePagamentoDTO> listarTodosOsMetodosDePagamento(@PathVariable UUID id) {
+		ListarTodosOsMetodosDePagamentoDTO listarTodosOsPagamentos  = this.gerenciarPagamento.pesquisarTodosOsMetodosDePagamento(id);
+		return ResponseEntity.status(HttpStatus.OK).body(listarTodosOsPagamentos);
 	}
 
 }

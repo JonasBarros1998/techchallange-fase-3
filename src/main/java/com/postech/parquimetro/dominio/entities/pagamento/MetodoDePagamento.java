@@ -86,4 +86,12 @@ public class MetodoDePagamento {
 	public Pix getPix() {
 		return pix;
 	}
+
+	public Debito getDebito() {
+		return debito;
+	}
+
+	public Credito getCredito() {
+		return credito;
+	}
 }

@@ -10,6 +10,7 @@ import java.util.UUID;
 @Proxy(lazy = false)
 sealed abstract class Cartao permits Credito, Debito {
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
@@ -55,6 +56,10 @@ sealed abstract class Cartao permits Credito, Debito {
 
 	public String getCodigoDeSeguranca() {
 		return codigoDeSeguranca;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 
 	public void setNomeDoTitular(String nomeDoTitular) {

@@ -2,6 +2,7 @@ package com.postech.parquimetro.aplicacao.pagamento;
 
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.CreditoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.DebitoDTO;
+import com.postech.parquimetro.aplicacao.DTO.pagamentos.ListarTodosOsMetodosDePagamentoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.PixDTO;
 import com.postech.parquimetro.aplicacao.Exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
 import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
@@ -20,7 +21,9 @@ import com.postech.parquimetro.view.form.pagamentos.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class GerenciarPagamento {
@@ -140,12 +143,13 @@ public class GerenciarPagamento {
 			.orElseThrow(() -> new ConteudoNaoEncontrado("metodo de pagamento nao encontrado"));
 
 		var metodosDePagamentos = this.pagamentoRepository
-			.pesquisarTodosOsMetodosDePagamentoPorIdDoCondutor(identificarQualOMetodoDePagamento.getCondutorId());
+			.pesquisarTodosOsTipoDePagamentoPorIdDoCondutor(identificarQualOMetodoDePagamento.getCondutorId());
 
 		var quantidadeTotalDosMetodosDePagamento = new VerificarQuantidadeTotalDosMetodosDePagamento();
-
-		Boolean podeRemoverMetodoDePagamento = quantidadeTotalDosMetodosDePagamento
-			.podeRemoverMetodoDePagamento(metodosDePagamentos, identificarQualOMetodoDePagamento.getTipoDePagamento());
+		Boolean podeRemoverMetodoDePagamento = quantidadeTotalDosMetodosDePagamento.podeRemoverMetodoDePagamento(
+			metodosDePagamentos,
+			identificarQualOMetodoDePagamento.getTipoDePagamento()
+		);
 
 		if(podeRemoverMetodoDePagamento == true) {
 			this.pagamentoRepository.deleteById(metodoDePagamentoID);
@@ -156,5 +160,24 @@ public class GerenciarPagamento {
 			"O condutor nao pode ficar sem nenhum metodo de pagamento do tipo Credito ou Debito ja cadsatrado " +
 				"Adicione outro metodo de pagamento para que assim consiga remover este metodo"
 		);
+	}
+
+	public ListarTodosOsMetodosDePagamentoDTO pesquisarTodosOsMetodosDePagamento(UUID condutorID) {
+		List<MetodoDePagamento> metodosDePagamento = this.pagamentoRepository.findByCondutorId(condutorID)
+			.orElseThrow(() -> new ConteudoNaoEncontrado("condutor nao encontrado"));
+
+		ListarTodosOsMetodosDePagamentoDTO listarTodosOsMetodosDePagamentoDTO = new ListarTodosOsMetodosDePagamentoDTO();
+
+		metodosDePagamento.stream().map((metodoDePagamento) -> {
+			listarTodosOsMetodosDePagamentoDTO.setMetodoDePagamento(metodoDePagamento);
+
+			return listarTodosOsMetodosDePagamentoDTO
+				.converterMetodosDePagamentoDoTipo(metodoDePagamento.getPix())
+				.converterMetodosDePagamentoDoTipo(metodoDePagamento.getCredito())
+				.converterMetodosDePagamentoDoTipo(metodoDePagamento.getDebito());
+
+		}).toList();
+
+		return listarTodosOsMetodosDePagamentoDTO;
 	}
 }
