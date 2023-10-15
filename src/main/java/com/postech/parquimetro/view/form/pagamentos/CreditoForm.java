@@ -28,7 +28,7 @@ public record CreditoForm(
 	@Length(min = 3, max = 3, message = "o campo codigoDeSeguranca deve conter 3 caracteres")
 	String codigoDeSeguranca,
 
-	@NotEmpty(message = "o campo codigoDeSeguranca e obrigatorio")
+	@NotEmpty(message = "o campo dataDeValidade e obrigatorio")
 	@Length(min = 7, max = 7, message = "o campo dataDeValidade invalido. Envie no seguinte formato mes e ano. Exemplo: 01/1998")
 	String dataDeValidade,
 

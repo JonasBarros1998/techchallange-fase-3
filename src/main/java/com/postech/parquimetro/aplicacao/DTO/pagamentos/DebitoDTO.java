@@ -1,6 +1,7 @@
 package com.postech.parquimetro.aplicacao.DTO.pagamentos;
 
 import com.postech.parquimetro.view.form.pagamentos.DebitoForm;
+import com.postech.parquimetro.view.form.pagamentos.EditarDebitoForm;
 
 public record DebitoDTO(
 	String condutor,
@@ -21,5 +22,16 @@ public record DebitoDTO(
 			debitoForm.dataDeValidade(),
 			debitoForm.nomeDaInstituicaoFinanceira(),
 			debitoForm.bandeira());
+	}
+
+	public static DebitoDTO converterDeDebitoFormParaDebitoDTO(EditarDebitoForm debitoForm) {
+		return new DebitoDTO(
+			null,
+			null,
+			debitoForm.nomeDoTitular(),
+			null,
+			debitoForm.dataDeValidade(),
+			null,
+			null);
 	}
 }

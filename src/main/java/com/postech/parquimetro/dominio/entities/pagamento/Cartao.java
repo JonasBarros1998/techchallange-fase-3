@@ -35,6 +35,12 @@ sealed abstract class Cartao permits Credito, Debito {
 		this.codigoDeSeguranca = codigoDeSeguranca;
 	}
 
+
+	public Cartao(String nomeDoTitular, String dataDeVencimento) {
+		this.nomeDoTitular = nomeDoTitular;
+		this.dataDeVencimento = dataDeVencimento;
+	}
+
 	public String getNumeroDoCartao() {
 		return numeroDoCartao;
 	}
@@ -49,6 +55,14 @@ sealed abstract class Cartao permits Credito, Debito {
 
 	public String getCodigoDeSeguranca() {
 		return codigoDeSeguranca;
+	}
+
+	public void setNomeDoTitular(String nomeDoTitular) {
+		this.nomeDoTitular = nomeDoTitular;
+	}
+
+	public void setDataDeVencimento(String dataDeVencimento) {
+		this.dataDeVencimento = dataDeVencimento;
 	}
 }
 

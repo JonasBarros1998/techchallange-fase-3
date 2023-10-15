@@ -12,15 +12,20 @@ public final class Credito extends Cartao implements IPagamento<Credito> {
 	@Column(length = 30)
 	String bandeira;
 
+	public Credito(String bandeira, String nomeDoTitular) {
+		super("jonas f barros", "02/2023");
+	}
+
 	public Credito(
 		String numeroDoCartao,
-		String nomeDoTitularDoCartao,
+		String nomeDoTitular,
 		String dataDeVencimento,
 		String codigoDeSeguranca,
 		String bandeira) {
-		super(numeroDoCartao, nomeDoTitularDoCartao, dataDeVencimento, codigoDeSeguranca);
+		super(numeroDoCartao, nomeDoTitular, dataDeVencimento, codigoDeSeguranca);
 		this.bandeira = bandeira;
 	}
+
 
 	public Credito() {
 		super();

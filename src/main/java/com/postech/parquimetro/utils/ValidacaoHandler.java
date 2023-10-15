@@ -1,5 +1,6 @@
 package com.postech.parquimetro.utils;
 
+import com.postech.parquimetro.aplicacao.Exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
 import com.postech.parquimetro.aplicacao.Exceptions.ConteudoDuplicado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,6 +62,18 @@ public class ValidacaoHandler {
 		ErroForm erroForm = new ErroForm(
 			"metodoDePagamento",
 			"O campo metodoDePagamento deve conter os seguintes valores: CREDITO, DEBITO ou PIX");
+		erroFormList.add(erroForm);
+
+		return erroFormList;
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion.class)
+	public List<ErroForm> handler(CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion exception) {
+		List<ErroForm> erroFormList = new ArrayList<>();
+		ErroForm erroForm = new ErroForm(
+			"CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion",
+			exception.getMessage());
 		erroFormList.add(erroForm);
 
 		return erroFormList;

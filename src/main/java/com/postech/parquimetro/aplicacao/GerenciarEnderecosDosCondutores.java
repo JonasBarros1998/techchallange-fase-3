@@ -3,26 +3,24 @@ package com.postech.parquimetro.aplicacao;
 import com.postech.parquimetro.aplicacao.DTO.EnderecoDTO;
 import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
 import com.postech.parquimetro.dominio.entities.EnderecoDoCondutor;
-import com.postech.parquimetro.infra.repository.EnderecoDoCondutorRepository;
-import com.postech.parquimetro.infra.repository.EnderecoRepository;
+import com.postech.parquimetro.infra.repository.EnderecoDoCondutorNoRepository;
+import com.postech.parquimetro.infra.repository.EnderecoNoRepository;
 import com.postech.parquimetro.view.form.EnderecoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class GerenciarEnderecosDosCondutores {
 
-	EnderecoRepository enderecoRepository;
+	EnderecoNoRepository enderecoNoRepository;
 
-	EnderecoDoCondutorRepository enderecoDoCondutorRepository;
+	EnderecoDoCondutorNoRepository enderecoDoCondutorRepository;
 
 	@Autowired
-	GerenciarEnderecosDosCondutores(EnderecoRepository enderecoRepository, EnderecoDoCondutorRepository enderecoDoCondutorRepository) {
-		this.enderecoRepository = enderecoRepository;
+	GerenciarEnderecosDosCondutores(EnderecoNoRepository enderecoNoRepository, EnderecoDoCondutorNoRepository enderecoDoCondutorRepository) {
+		this.enderecoNoRepository = enderecoNoRepository;
 		this.enderecoDoCondutorRepository = enderecoDoCondutorRepository;
 	}
 

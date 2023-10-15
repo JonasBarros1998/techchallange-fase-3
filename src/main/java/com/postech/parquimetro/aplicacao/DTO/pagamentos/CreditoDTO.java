@@ -2,6 +2,7 @@ package com.postech.parquimetro.aplicacao.DTO.pagamentos;
 
 import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
 import com.postech.parquimetro.view.form.pagamentos.CreditoForm;
+import com.postech.parquimetro.view.form.pagamentos.EditarCreditoForm;
 
 public record CreditoDTO(
 	String condutor,
@@ -9,7 +10,7 @@ public record CreditoDTO(
 	String nomeDoTitular,
 	String bandeira,
 	String codigoDeSeguranca,
-	String dataDeValidade,
+	String dataDeVencimento,
 	TiposDePagamento metodoDePagamento
 ) {
 
@@ -22,5 +23,16 @@ public record CreditoDTO(
 			creditoForm.codigoDeSeguranca(),
 			creditoForm.dataDeValidade(),
 			creditoForm.metodoDePagamento());
+	}
+
+	public static CreditoDTO converterDeEditarCreditoFormParaCreditoDTO(EditarCreditoForm creditoForm) {
+		return new CreditoDTO(
+			null,
+			null,
+			creditoForm.nomeDoTitular(),
+			null,
+			null,
+			creditoForm.dataDeValidade(),
+			null);
 	}
 }

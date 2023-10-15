@@ -11,12 +11,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "metodo_de_pagamento")
 public class MetodoDePagamento {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@ManyToOne
+	@ManyToOne()
 	private Condutor condutor;
 
 	@Column(nullable = false, updatable = false)
@@ -29,13 +28,13 @@ public class MetodoDePagamento {
 	@Enumerated(EnumType.STRING)
 	private TiposDePagamento tiposDePagamento;
 
-	@OneToOne(mappedBy = "metodoDePagamento", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "metodoDePagamento", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
 	private Debito debito;
 
-	@OneToOne(mappedBy = "metodoDePagamento", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "metodoDePagamento", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
 	private Credito credito;
 
-	@OneToOne(mappedBy = "metodoDePagamento", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "metodoDePagamento", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
 	private Pix pix;
 
 	@Transient
@@ -48,10 +47,6 @@ public class MetodoDePagamento {
 		this.tiposDePagamento = tiposDePagamento;
 		this.pagamento = pagamento;
 		this.identificarTipoDePagamento();
-	}
-
-	public UUID getUuid() {
-		return id;
 	}
 
 	public Condutor getCondutor() {
@@ -86,5 +81,9 @@ public class MetodoDePagamento {
 		});
 
 		mappper.get(this.pagamento.criarPagamento().getClass()).run();
+	}
+
+	public Pix getPix() {
+		return pix;
 	}
 }

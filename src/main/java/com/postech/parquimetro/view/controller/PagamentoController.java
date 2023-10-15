@@ -4,15 +4,14 @@ import com.postech.parquimetro.aplicacao.DTO.pagamentos.CreditoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.DebitoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.PixDTO;
 import com.postech.parquimetro.aplicacao.pagamento.GerenciarPagamento;
-import com.postech.parquimetro.view.form.pagamentos.CreditoForm;
-import com.postech.parquimetro.view.form.pagamentos.DebitoForm;
-import com.postech.parquimetro.view.form.pagamentos.PixForm;
+import com.postech.parquimetro.view.form.pagamentos.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/pagamentos")
@@ -37,10 +36,28 @@ public class PagamentoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(debitoDTO);
 	}
 
+	@PutMapping("/debito/{id}")
+	public ResponseEntity<EditarDebitoForm> editarCartaoDeDebito(@PathVariable UUID id, @RequestBody @Valid EditarDebitoForm debitoForm) {
+		EditarDebitoForm debito = this.gerenciarPagamento.editarTipoDePagamento(id, debitoForm);
+		return ResponseEntity.status(HttpStatus.OK).body(debito);
+	}
+
 	@PostMapping("/credito")
 	public ResponseEntity<CreditoDTO> cadastrarCartaoDeCreditoComoMetodoDePagamento(@RequestBody @Valid CreditoForm creditoForm) {
 		this.gerenciarPagamento.cadastrarNovoMetodoDePagamento(creditoForm);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@PutMapping("/credito/{id}")
+	public ResponseEntity<EditarCreditoForm> editarCartaoDeCredito(@PathVariable UUID id, @RequestBody @Valid EditarCreditoForm creditoForm) {
+		EditarCreditoForm credito = this.gerenciarPagamento.editarTipoDePagamento(id, creditoForm);
+		return ResponseEntity.status(HttpStatus.OK).body(credito);
+	}
+
+	@DeleteMapping(value = "/metodoDePagamento/{metodoDePagamentoID}")
+	public ResponseEntity<Void> RemoverMetodoDePagamento(@PathVariable UUID metodoDePagamentoID) {
+		this.gerenciarPagamento.removerMetodoDePagamento(metodoDePagamentoID);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }

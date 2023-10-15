@@ -1,6 +1,7 @@
 package com.postech.parquimetro.dominio.entities;
 
 
+import com.postech.parquimetro.dominio.entities.pagamento.MetodoDePagamento;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -31,7 +32,11 @@ public class Condutor {
 	private EnderecoDoCondutor enderecoDoCondutor;
 
 	@OneToMany(mappedBy = "condutor", cascade = CascadeType.REMOVE)
-	List<Automovel> automovel;
+	private List<Automovel> automovel;
+
+
+	@OneToMany(mappedBy = "condutor", cascade = CascadeType.REMOVE)
+	private List<MetodoDePagamento> metodoDePagamentos;
 
 	public Condutor() {
 	}
