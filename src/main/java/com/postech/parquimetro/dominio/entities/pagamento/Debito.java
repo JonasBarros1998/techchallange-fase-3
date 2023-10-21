@@ -1,14 +1,17 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
+import com.postech.parquimetro.infra.criptografia.Criptografia;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "debito")
 public final class Debito extends Cartao implements IPagamento<Debito> {
 
+	@Convert(converter = Criptografia.class)
 	@Column(nullable = false, length = 50)
 	String nomeDaInstituicaoFinanceira;
 
+	@Convert(converter = Criptografia.class)
 	@OneToOne(orphanRemoval = true, optional = false)
 	@JoinColumn(referencedColumnName = "id", name = "metodo_de_pagamento_id")
 	MetodoDePagamento metodoDePagamento;

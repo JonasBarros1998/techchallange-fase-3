@@ -2,6 +2,7 @@ package com.postech.parquimetro.dominio.entities.pagamento;
 
 import com.postech.parquimetro.dominio.entities.Condutor;
 import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
+import com.postech.parquimetro.infra.criptografia.Criptografia;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -24,7 +25,8 @@ public class MetodoDePagamento {
 	@Column(nullable = false)
 	private LocalDateTime ultimaEdicao = LocalDateTime.now();
 
-	@Column(nullable = false, length = 20, name = "tipo_de_pagamento")
+	@Convert(converter = Criptografia.class)
+	@Column(nullable = false, name = "tipo_de_pagamento")
 	@Enumerated(EnumType.STRING)
 	private TiposDePagamento tiposDePagamento;
 

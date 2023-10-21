@@ -1,5 +1,6 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
+import com.postech.parquimetro.infra.criptografia.Criptografia;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Proxy;
 
@@ -15,16 +16,20 @@ sealed abstract class Cartao permits Credito, Debito {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@Column(length = 16, nullable = false, unique = true)
+	@Convert(converter = Criptografia.class)
+	@Column(nullable = false, unique = true)
 	private String numeroDoCartao;
 
-	@Column(length = 30, nullable = false)
+	@Convert(converter = Criptografia.class)
+	@Column(nullable = false)
 	private String nomeDoTitular;
 
-	@Column(length = 7, nullable = false)
+	@Convert(converter = Criptografia.class)
+	@Column(nullable = false)
 	private String dataDeVencimento;
 
-	@Column(length = 3, nullable = false, unique = true)
+	@Convert(converter = Criptografia.class)
+	@Column(nullable = false, unique = true)
 	private String codigoDeSeguranca;
 
 	public Cartao() {}
