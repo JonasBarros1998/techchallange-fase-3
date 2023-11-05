@@ -9,7 +9,7 @@
 - `POST: /api/condutores`
 - `POST: /api/automoveis`
 - `POST: /api/credito`, `POST: /api/debito` ou `POST: /api/pix`
-- `POST: /api/parquimetro/tempoVariavel`
+- `POST: /api/parquimetro/tempoVariavel` ou `/api/parquimetro/tempoFixo` 
 
 ## Regras de negócio
 
