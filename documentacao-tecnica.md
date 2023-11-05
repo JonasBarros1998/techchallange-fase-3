@@ -52,21 +52,24 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 - Utilizamos os seguintes recursos da AWS: ECS, Fargate, SQS para envio de alertas, SQS para finalização do agendamento (utilizado apenas para estacionamento por tempo fixo) e por fim o Event Bridge.
 - Utilizaria exatamente essa arquitetura para uma aplicação escalável, porém com algumas ressalvas. Aumentaria o número de containers de 1 para pelo menos 6 containers, incluiria também um API Gateway, Load balance e por fim criaria uma VPC para incluir todos esses recursos. Por último, configuraria apenas um endereço público a partir do API Gateway para os consumidores da API poderem acessá-la corretamente.
 - **event bridge**: configurei três tipos de roles.
-  1° role foi para envio de e-mail, que será ativada sempre 10 minutos antes do tempo do estacionamento expirar que é utilizada apenas para o estacionamento por tempo fixo,
+  
+  1° role: para envio de e-mail, que será ativada sempre 10 minutos antes do tempo do estacionamento expirar que é utilizada apenas para o estacionamento por tempo fixo.
 
-  2° role é focada na finalização do agendamento
+  2° role: é focada na finalização do agendamento
 
-  3° role criamos um intervalo de tempo de 60 minutos para estacionamento por tempo variável
+  3° role: criamos um intervalo de tempo de 60 minutos para estacionamento por tempo variável
 
- - **AWS SQS** criei duas filas que trafagam informações diferentes.
-1° enviar e-mail: Apenas para alerta, utlizada tanto para estacionamento por tempo fixo, quanto para estacionamento por tempo variável
-2° finalização: Utilizado apenas para o estacionamento por tempo fixo, que irá enviar para a aplicação quando o tempo do estacionamento já expirou.   
+ - **AWS SQS** criei duas filas que enviar a aplicação diferentes tipos de informações.
+   
+  1° enviar e-mail (postech_enviar_email): Apenas para alerta, utlizada tanto para estacionamento por tempo fixo, quanto para estacionamento por tempo variável
+  
+  2° finalização (postech_remover_evento): Utilizado apenas para o estacionamento por tempo fixo, que irá enviar para a aplicação quando o tempo do estacionamento já expirou.   
 
 - Detalhando os passos que a aplicação faz quando marcamos um estacionamento por tempo fixo:
 
   1° Executamos o endpoint `/api/parquimetro/tempoFixo`, com isso criamos dois eventos do tipo cronjob no event bridge (alertaParaEnviarEmail_ e agendamentoPorTempoFixo_). O evento `alertaParaEnviarEmail_` é focado para enviar um alerta 10 minutos antes do tempo expirar e o evento `agendamentoPorTempoFixo_` envia uma mensagem a fila quando o tempo do estacionamento expirar.
 
-  2° Quando "bater" o horário de 10 minutos antes de encerrar o estacionamento o evento enviará uma mensagem a fila de alertas chamada de `postech_enviar_email`.
+  2° Quando chegar o horário de 10 minutos antes de encerrar o estacionamento o evento enviará uma mensagem a fila de alertas chamada de `postech_enviar_email`.
 
   3° A aplicação vai ler a mensagem da fila, e enviará um e-email ao usuário alertando que o tempo está se encerrando, e por fim a aplicação apagará esse evento.
 
