@@ -1,4 +1,4 @@
-package com.postech.parquimetro.aplicacao.Exceptions;
+package com.postech.parquimetro.aplicacao.exceptions;
 
 public class CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion extends RuntimeException {
 

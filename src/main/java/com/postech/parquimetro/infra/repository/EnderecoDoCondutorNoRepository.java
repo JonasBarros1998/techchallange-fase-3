@@ -25,7 +25,8 @@ public non-sealed interface EnderecoDoCondutorNoRepository extends Repository<En
 	@Override
 	void editar(@Param("endereco") EnderecoDoCondutor endereco, UUID id);
 
-	@Query(value = "select endereco from EnderecoDoCondutor endereco where endereco.id = :id")
+	@Query(value = "select endereco from EnderecoDoCondutor endereco " +
+		"left join Condutor condutor on condutor.enderecoDoCondutor.id = :id")
 	@Override
 	Optional<EnderecoDoCondutor> pesquisarPorID(UUID id);
 

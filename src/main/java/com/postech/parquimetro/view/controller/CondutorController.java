@@ -1,6 +1,8 @@
 package com.postech.parquimetro.view.controller;
 
 import com.postech.parquimetro.aplicacao.GerenciarCondutores;
+import com.postech.parquimetro.dominio.entities.parquimetro.RegistroDeEstacionamento;
+import com.postech.parquimetro.dominio.entities.projections.ConsultaRegistrosDeEstacionamento;
 import com.postech.parquimetro.view.DTO.consultaCondutores.ConsultaCondutoresDTO;
 import com.postech.parquimetro.view.form.CondutorForm;
 import com.postech.parquimetro.view.form.EditarCondutorForm;
@@ -46,6 +48,12 @@ public class CondutorController {
 	public ResponseEntity<Void> remover(@PathVariable UUID id) {
 		this.gerenciarCondutores.remover(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/registroDeEstacionamento/{condutorID}")
+	public ResponseEntity<List<ConsultaRegistrosDeEstacionamento>> pesquisarTodosOsRegistrosDePagamento(@PathVariable UUID condutorID) {
+		List<ConsultaRegistrosDeEstacionamento> registros = this.gerenciarCondutores.pesquisarTodosOsRegistrosDeEstacionamento(condutorID);
+		return ResponseEntity.status(HttpStatus.OK).body(registros);
 	}
 
 }

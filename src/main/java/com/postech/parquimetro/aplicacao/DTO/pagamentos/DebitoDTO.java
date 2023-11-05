@@ -3,8 +3,10 @@ package com.postech.parquimetro.aplicacao.DTO.pagamentos;
 import com.postech.parquimetro.view.form.pagamentos.DebitoForm;
 import com.postech.parquimetro.view.form.pagamentos.EditarDebitoForm;
 
+import java.util.UUID;
+
 public record DebitoDTO(
-	String condutor,
+	UUID condutor,
 	String numeroDoCartao,
 	String nomeDoTitular,
 	String codigoDeSeguranca,

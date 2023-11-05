@@ -7,6 +7,7 @@ import com.postech.parquimetro.view.form.CondutorForm;
 import com.postech.parquimetro.view.form.EditarCondutorForm;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public class CondutorDTO {
@@ -81,6 +82,7 @@ public class CondutorDTO {
 				condutor.getEmail(),
 				condutor.getNome(),
 				condutor.getTelefone(),
+				condutor.getStatus(),
 				endereco,
 				automoveis);
 		}).toList();

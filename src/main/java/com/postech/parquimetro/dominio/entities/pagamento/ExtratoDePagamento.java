@@ -14,7 +14,7 @@ public class ExtratoDePagamento {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@Column(nullable = false)
+	@Column
 	private BigDecimal valor;
 
 	private LocalDateTime dataDeEmisao = LocalDateTime.now();
@@ -24,6 +24,11 @@ public class ExtratoDePagamento {
 
 	public ExtratoDePagamento(BigDecimal valor, LocalDateTime dataDeEmisao, MetodoDePagamento metodoDePagamento) {
 		this.valor = valor;
+		this.dataDeEmisao = dataDeEmisao;
+		this.metodoDePagamento = metodoDePagamento;
+	}
+
+	public ExtratoDePagamento(LocalDateTime dataDeEmisao, MetodoDePagamento metodoDePagamento) {
 		this.dataDeEmisao = dataDeEmisao;
 		this.metodoDePagamento = metodoDePagamento;
 	}
@@ -44,5 +49,9 @@ public class ExtratoDePagamento {
 
 	public MetodoDePagamento getPagamento() {
 		return metodoDePagamento;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 }

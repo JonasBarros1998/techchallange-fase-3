@@ -1,7 +1,6 @@
 package com.postech.parquimetro.dominio.entities;
 
 
-import com.postech.parquimetro.dominio.entities.pagamento.MetodoDePagamento;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -31,12 +30,15 @@ public class Condutor {
 	@JoinColumn(referencedColumnName = "id", updatable = false)
 	private EnderecoDoCondutor enderecoDoCondutor;
 
+	@Column(nullable = false)
+	private Boolean status = Boolean.TRUE;
+
 	@OneToMany(mappedBy = "condutor", cascade = CascadeType.REMOVE)
 	private List<Automovel> automovel;
 
-
+	/*
 	@OneToMany(mappedBy = "condutor", cascade = CascadeType.REMOVE)
-	private List<MetodoDePagamento> metodoDePagamentos;
+	private List<MetodoDePagamento> metodoDePagamentos;*/
 
 	public Condutor() {
 	}
@@ -90,6 +92,10 @@ public class Condutor {
 		return email;
 	}
 
+	public Boolean getStatus() {
+		return status;
+	}
+
 	public List<Automovel> getAutomovel() {
 		return automovel;
 	}
@@ -104,6 +110,10 @@ public class Condutor {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public void desativarCondutor() {
+		this.status = Boolean.FALSE;
 	}
 }
 

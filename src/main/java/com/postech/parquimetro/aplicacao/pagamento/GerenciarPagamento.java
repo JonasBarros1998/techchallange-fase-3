@@ -4,10 +4,10 @@ import com.postech.parquimetro.aplicacao.DTO.pagamentos.CreditoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.DebitoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.ListarTodosOsMetodosDePagamentoDTO;
 import com.postech.parquimetro.aplicacao.DTO.pagamentos.PixDTO;
-import com.postech.parquimetro.aplicacao.Exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
-import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
+import com.postech.parquimetro.aplicacao.exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
+import com.postech.parquimetro.aplicacao.exceptions.ConteudoNaoEncontrado;
 import com.postech.parquimetro.dominio.VerificarQuantidadeTotalDosMetodosDePagamento;
-import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
+import com.postech.parquimetro.dominio.enums.TiposDePagamento;
 import com.postech.parquimetro.dominio.entities.pagamento.Credito;
 import com.postech.parquimetro.dominio.entities.pagamento.Debito;
 import com.postech.parquimetro.dominio.entities.pagamento.MetodoDePagamento;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class GerenciarPagamento {
@@ -49,7 +48,7 @@ public class GerenciarPagamento {
 	public CreditoDTO cadastrarNovoMetodoDePagamento(CreditoForm creditoForm) {
 		CreditoDTO creditoDTO = CreditoDTO.converterDeCreditoFormParaCreditoDTO(creditoForm);
 
-		var condutor = this.condutorRepository.findById(creditoDTO.condutor()).orElseThrow(() -> {
+		var condutor = this.condutorRepository.findCondutorByIdAndStatusIsTrue(creditoDTO.condutor()).orElseThrow(() -> {
 			throw new ConteudoNaoEncontrado("Condutor nao encontrado");
 		});
 
@@ -71,7 +70,7 @@ public class GerenciarPagamento {
 	public DebitoDTO cadastrarNovoMetodoDePagamento(DebitoForm debitoForm) {
 		DebitoDTO debitoDTO = DebitoDTO.converterDeDebitoFormParaDebitoDTO(debitoForm);
 
-		var condutor = this.condutorRepository.findById(debitoDTO.condutor()).orElseThrow(() -> {
+		var condutor = this.condutorRepository.findCondutorByIdAndStatusIsTrue(debitoDTO.condutor()).orElseThrow(() -> {
 			throw new ConteudoNaoEncontrado("Condutor nao encontrado");
 		});
 
@@ -93,7 +92,7 @@ public class GerenciarPagamento {
 	public PixDTO cadastrarNovoMetodoDePagamento(PixForm pixForm) {
 		PixDTO pixDTO = PixDTO.converterDePixFormParaPixDTO(pixForm);
 
-		var condutor = this.condutorRepository.findById(pixDTO.condutor()).orElseThrow(() -> {
+		var condutor = this.condutorRepository.findCondutorByIdAndStatusIsTrue(pixDTO.condutor()).orElseThrow(() -> {
 			throw new ConteudoNaoEncontrado("Condutor nao encontrado");
 		});
 

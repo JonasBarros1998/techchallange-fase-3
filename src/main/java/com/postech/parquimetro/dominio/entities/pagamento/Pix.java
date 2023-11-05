@@ -21,7 +21,7 @@ public final class Pix implements IPagamento<Pix> {
 
 	@OneToOne(orphanRemoval = true, optional = false)
 	@JoinColumn(referencedColumnName = "id", name = "metodo_de_pagamento_id")
-	MetodoDePagamento metodoDePagamento;
+	private MetodoDePagamento metodoDePagamento;
 
 	public Pix() {}
 
@@ -36,6 +36,10 @@ public final class Pix implements IPagamento<Pix> {
 	@Override
 	public Pix criarPagamento() {
 		return this;
+	}
+
+	public MetodoDePagamento getMetodoDePagamento() {
+		return metodoDePagamento;
 	}
 
 	public void setMetodoDePagamento(MetodoDePagamento metodoDePagamento) {

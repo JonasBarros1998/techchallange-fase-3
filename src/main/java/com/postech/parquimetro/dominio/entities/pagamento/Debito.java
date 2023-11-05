@@ -9,12 +9,12 @@ public final class Debito extends Cartao implements IPagamento<Debito> {
 
 	@Convert(converter = Criptografia.class)
 	@Column(nullable = false, length = 50)
-	String nomeDaInstituicaoFinanceira;
+	private String nomeDaInstituicaoFinanceira;
 
 	@Convert(converter = Criptografia.class)
 	@OneToOne(orphanRemoval = true, optional = false)
 	@JoinColumn(referencedColumnName = "id", name = "metodo_de_pagamento_id")
-	MetodoDePagamento metodoDePagamento;
+	private MetodoDePagamento metodoDePagamento;
 
 	public Debito(
 		String numeroDoCartao,
@@ -32,6 +32,10 @@ public final class Debito extends Cartao implements IPagamento<Debito> {
 
 	public String getnomeDaInstituicaoFinanceira() {
 		return nomeDaInstituicaoFinanceira;
+	}
+
+	public MetodoDePagamento getMetodoDePagamento() {
+		return metodoDePagamento;
 	}
 
 	@Override

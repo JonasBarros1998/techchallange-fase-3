@@ -15,11 +15,6 @@ public class ListarTodosOsMetodosDePagamentoDTO {
 	public List<ListarCartaoDeCreditoDTO> creditos = new ArrayList<>();
 	public List<ListarPixDTO> listarPix = new ArrayList<>();
 
-	/*
-	public ListarTodosOsMetodosDePagamentoDTO(MetodoDePagamento metodoDePagamento) {
-		this.metodoDePagamento = metodoDePagamento;
-	}*/
-
 	public ListarTodosOsMetodosDePagamentoDTO() {}
 
 
@@ -37,6 +32,7 @@ public class ListarTodosOsMetodosDePagamentoDTO {
 
 		if(credito != null) {
 			this.creditos.add(new ListarCartaoDeCreditoDTO(
+				credito.getMetodoDePagamento().getId(),
 				credito.getId(),
 				credito.getNomeDoTitular(),
 				credito.getDataDeVencimento(),
@@ -51,6 +47,7 @@ public class ListarTodosOsMetodosDePagamentoDTO {
 
 		if (debito != null) {
 			this.debitos.add(new ListarCartaoDeDebitoDTO(
+				debito.getMetodoDePagamento().getId(),
 				debito.getId(),
 				debito.getNomeDoTitular(),
 				debito.getDataDeVencimento(),
@@ -65,6 +62,7 @@ public class ListarTodosOsMetodosDePagamentoDTO {
 
 		if(pix != null) {
 			this.listarPix.add(new ListarPixDTO(
+				pix.getMetodoDePagamento().getId(),
 				pix.getId(),
 				this.metodoDePagamento.getTiposDePagamento(),
 				pix.getChavePix().substring(0, 7) + "..."

@@ -1,6 +1,6 @@
 package com.postech.parquimetro.dominio.entities.projections;
 
-import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
+import com.postech.parquimetro.dominio.enums.TiposDePagamento;
 
 import java.util.UUID;
 

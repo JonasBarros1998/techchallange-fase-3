@@ -15,6 +15,7 @@ public record ConsultaCondutoresDTO(
 	String nome,
 
 	String telefone,
+	Boolean statusDoCondutor,
 
 	EnderecoDTO endereco,
 

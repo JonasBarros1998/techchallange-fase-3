@@ -9,10 +9,10 @@ public final class Credito extends Cartao implements IPagamento<Credito> {
 	@Convert(converter = Criptografia.class)
 	@OneToOne(orphanRemoval = true, optional = false)
 	@JoinColumn(referencedColumnName = "id", name = "metodo_de_pagamento_id")
-	MetodoDePagamento metodoDePagamento;
+	private MetodoDePagamento metodoDePagamento;
 
 	@Column(length = 30)
-	String bandeira;
+	private String bandeira;
 
 	public Credito(String bandeira, String nomeDoTitular) {
 		super("jonas f barros", "02/2023");
@@ -36,6 +36,10 @@ public final class Credito extends Cartao implements IPagamento<Credito> {
 	@Override
 	public Credito criarPagamento() {
 		return this;
+	}
+
+	public MetodoDePagamento getMetodoDePagamento() {
+		return metodoDePagamento;
 	}
 
 	public void setMetodoDePagamento(MetodoDePagamento metodoDePagamento) {

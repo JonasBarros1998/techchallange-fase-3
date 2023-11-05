@@ -1,7 +1,6 @@
 package com.postech.parquimetro.infra.repository;
 
 import com.postech.parquimetro.dominio.entities.pagamento.MetodoDePagamento;
-import com.postech.parquimetro.dominio.entities.projections.ConsultaTodosOsMetodosDePagamentoDoCondutor;
 import com.postech.parquimetro.dominio.entities.projections.ConsultaTodosOsTiposDePagamentoDoCondutor;
 import com.postech.parquimetro.dominio.entities.projections.PesquisarPorUmMetodoDePagamentoDoCondutor;
 import org.springframework.data.jpa.repository.JpaRepository;

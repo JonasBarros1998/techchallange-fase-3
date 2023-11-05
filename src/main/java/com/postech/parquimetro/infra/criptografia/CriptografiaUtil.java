@@ -1,6 +1,8 @@
 package com.postech.parquimetro.infra.criptografia;
 
+import jakarta.validation.Valid;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.*;
@@ -13,11 +15,14 @@ import java.util.Optional;
 @Component
 public class CriptografiaUtil {
 
-	private String key = "osDvTftQSL4oDizijvegtFCd6caSQeiA";
+	@Value("${seguranca.chave}")
+	private String key;
 
-	private String algoritimo = "AES/CFB/PKCS5Padding";
+	@Value("${seguranca.algoritimo}")
+	private String algoritimo;
 
-	private String initVector = "NXlDXBexHLFMHSgA";
+	@Value("${seguranca.initVector}")
+	private String initVector;
 
 
 	public Optional<String> descriptografar(String valorCriptografado) {

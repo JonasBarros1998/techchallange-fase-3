@@ -1,4 +1,4 @@
-package com.postech.parquimetro.dominio.entities.enums;
+package com.postech.parquimetro.dominio.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

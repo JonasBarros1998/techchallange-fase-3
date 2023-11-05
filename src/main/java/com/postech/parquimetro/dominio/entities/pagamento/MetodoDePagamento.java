@@ -1,7 +1,7 @@
 package com.postech.parquimetro.dominio.entities.pagamento;
 
 import com.postech.parquimetro.dominio.entities.Condutor;
-import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
+import com.postech.parquimetro.dominio.enums.TiposDePagamento;
 import com.postech.parquimetro.infra.criptografia.Criptografia;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

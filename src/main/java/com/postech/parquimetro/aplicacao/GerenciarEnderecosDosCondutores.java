@@ -1,7 +1,7 @@
 package com.postech.parquimetro.aplicacao;
 
 import com.postech.parquimetro.aplicacao.DTO.EnderecoDTO;
-import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
+import com.postech.parquimetro.aplicacao.exceptions.ConteudoNaoEncontrado;
 import com.postech.parquimetro.dominio.entities.EnderecoDoCondutor;
 import com.postech.parquimetro.infra.repository.EnderecoDoCondutorNoRepository;
 import com.postech.parquimetro.infra.repository.EnderecoNoRepository;
@@ -31,7 +31,6 @@ public class GerenciarEnderecosDosCondutores {
 
 		EnderecoDoCondutor enderecoDoCondutor = this.enderecoDoCondutorRepository.pesquisarPorID(enderecoID)
 			.orElseThrow(() -> new ConteudoNaoEncontrado("Endereco nao encontrado"));
-
 
 		enderecoDoCondutor.setEstado(enderecoDTO.estado());
 		enderecoDoCondutor.setCep(enderecoDTO.cep());

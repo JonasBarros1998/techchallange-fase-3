@@ -1,11 +1,13 @@
 package com.postech.parquimetro.aplicacao;
 
 import com.postech.parquimetro.aplicacao.DTO.CondutorDTO;
-import com.postech.parquimetro.aplicacao.Exceptions.ConteudoDuplicado;
-import com.postech.parquimetro.aplicacao.Exceptions.ConteudoNaoEncontrado;
+import com.postech.parquimetro.aplicacao.exceptions.ConteudoDuplicado;
+import com.postech.parquimetro.aplicacao.exceptions.ConteudoNaoEncontrado;
 import com.postech.parquimetro.dominio.entities.Condutor;
 import com.postech.parquimetro.dominio.entities.EnderecoDoCondutor;
+import com.postech.parquimetro.dominio.entities.projections.ConsultaRegistrosDeEstacionamento;
 import com.postech.parquimetro.infra.repository.CondutorRepository;
+import com.postech.parquimetro.infra.repository.RegistroDeEstacionamentoRepository;
 import com.postech.parquimetro.view.DTO.consultaCondutores.ConsultaCondutoresDTO;
 import com.postech.parquimetro.view.form.CondutorForm;
 import com.postech.parquimetro.view.form.EditarCondutorForm;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,10 +26,14 @@ public class GerenciarCondutores {
 
 	CondutorRepository condutorRepository;
 
+	RegistroDeEstacionamentoRepository registroDeEstacionamentoRepository;
+
 	GerenciarCondutores() {}
 	@Autowired
-	GerenciarCondutores(CondutorRepository condutorRepository) {
+	GerenciarCondutores(CondutorRepository condutorRepository,
+	                    RegistroDeEstacionamentoRepository registroDeEstacionamentoRepository) {
 		this.condutorRepository = condutorRepository;
+		this.registroDeEstacionamentoRepository = registroDeEstacionamentoRepository;
 	}
 
 	public CondutorDTO salvar(CondutorForm condutorForm) {
@@ -61,7 +69,7 @@ public class GerenciarCondutores {
 	public EditarCondutorForm editar(EditarCondutorForm condutorForm, UUID id) {
 		var condutorDTO = CondutorDTO.converterCondutorFormParaCondutorDTO(condutorForm);
 
-		Condutor condutor = this.condutorRepository.findCondutorById(id)
+		Condutor condutor = this.condutorRepository.findCondutorByIdAndStatusIsTrue(id)
 			.orElseThrow(() -> new ConteudoNaoEncontrado("Nao foi possivel encontrar o condutor"));
 
 		condutor.setNome(condutorDTO.getNome());
@@ -74,15 +82,22 @@ public class GerenciarCondutores {
 	}
 
 	public List<ConsultaCondutoresDTO> consultarTodosCondutores() {
-		List<Condutor> condutores = this.condutorRepository.pesquisarPorTodosCondutores();
+		List<Condutor> condutores = this.condutorRepository.pesquisarPorTodosCondutoresAtivos();
 		return CondutorDTO.converterCondutorParaConsultaCondutoresDTO(condutores);
 	}
 
 	@Transactional
 	public void remover(UUID condutorID) {
-		Condutor condutor = this.condutorRepository.findCondutorById(condutorID)
+		Condutor condutor = this.condutorRepository.findCondutorByIdAndStatusIsTrue(condutorID)
 			.orElseThrow(() -> new ConteudoNaoEncontrado("condutor nao encontrado"));
 
-		this.condutorRepository.deleteById(condutor.getCpf());
+		condutor.desativarCondutor();
+		this.condutorRepository.save(condutor);
+	}
+
+	public List<ConsultaRegistrosDeEstacionamento> pesquisarTodosOsRegistrosDeEstacionamento(UUID condutorID) {
+		var registros = this.registroDeEstacionamentoRepository.findByCondutorIdAndStatusIsTrue(condutorID);
+		Collections.sort(registros, Comparator.comparing(ConsultaRegistrosDeEstacionamento::getTempoInicial).reversed());
+		return registros;
 	}
 }

@@ -1,7 +1,8 @@
 package com.postech.parquimetro.utils;
 
-import com.postech.parquimetro.aplicacao.Exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
-import com.postech.parquimetro.aplicacao.Exceptions.ConteudoDuplicado;
+import com.postech.parquimetro.aplicacao.exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
+import com.postech.parquimetro.aplicacao.exceptions.ConteudoDuplicado;
+import com.postech.parquimetro.dominio.exceptions.PagamentosNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -73,6 +74,18 @@ public class ValidacaoHandler {
 		List<ErroForm> erroFormList = new ArrayList<>();
 		ErroForm erroForm = new ErroForm(
 			"CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion",
+			exception.getMessage());
+		erroFormList.add(erroForm);
+
+		return erroFormList;
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(PagamentosNaoEncontradoException.class)
+	public List<ErroForm> handler(PagamentosNaoEncontradoException exception) {
+		List<ErroForm> erroFormList = new ArrayList<>();
+		ErroForm erroForm = new ErroForm(
+			"NaoExistePagamentosRegistradosExcetion",
 			exception.getMessage());
 		erroFormList.add(erroForm);
 

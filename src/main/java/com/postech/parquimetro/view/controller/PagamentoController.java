@@ -46,8 +46,8 @@ public class PagamentoController {
 
 	@PostMapping("/credito")
 	public ResponseEntity<CreditoDTO> cadastrarCartaoDeCreditoComoMetodoDePagamento(@RequestBody @Valid CreditoForm creditoForm) {
-		this.gerenciarPagamento.cadastrarNovoMetodoDePagamento(creditoForm);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+		CreditoDTO creditoDTO = this.gerenciarPagamento.cadastrarNovoMetodoDePagamento(creditoForm);
+		return ResponseEntity.status(HttpStatus.CREATED).body(creditoDTO);
 	}
 
 	@PutMapping("/credito/{id}")
@@ -62,9 +62,9 @@ public class PagamentoController {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ListarTodosOsMetodosDePagamentoDTO> listarTodosOsMetodosDePagamento(@PathVariable UUID id) {
-		ListarTodosOsMetodosDePagamentoDTO listarTodosOsPagamentos  = this.gerenciarPagamento.pesquisarTodosOsMetodosDePagamento(id);
+	@GetMapping("/{condutorID}")
+	public ResponseEntity<ListarTodosOsMetodosDePagamentoDTO> listarTodosOsMetodosDePagamento(@PathVariable UUID condutorID) {
+		ListarTodosOsMetodosDePagamentoDTO listarTodosOsPagamentos  = this.gerenciarPagamento.pesquisarTodosOsMetodosDePagamento(condutorID);
 		return ResponseEntity.status(HttpStatus.OK).body(listarTodosOsPagamentos);
 	}
 

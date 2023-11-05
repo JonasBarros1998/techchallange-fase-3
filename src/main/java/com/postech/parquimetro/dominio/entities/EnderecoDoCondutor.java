@@ -61,6 +61,10 @@ public class EnderecoDoCondutor {
 		return cep;
 	}
 
+	public UUID getId() {
+		return id;
+	}
+
 	public String getComplemento() {
 		return complemento;
 	}
@@ -88,4 +92,5 @@ public class EnderecoDoCondutor {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+
 }

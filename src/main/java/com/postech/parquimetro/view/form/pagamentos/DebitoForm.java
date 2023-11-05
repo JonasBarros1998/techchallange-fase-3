@@ -1,13 +1,15 @@
 package com.postech.parquimetro.view.form.pagamentos;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.UUID;
 
 public record DebitoForm(
 
-	@NotEmpty(message = "o campo condutor e obrigatorio")
-	@Length(min = 11, max = 11, message = "campo cpf deve ter 11 digitos")
-	String condutor,
+	@NotNull
+	UUID condutor,
 
 	@NotEmpty(message = "o campo numeroDoCartao e obrigatorio")
 	@Length(min = 16, max = 16, message = "O numeroDoCartao deve contrar 16 caracteres")

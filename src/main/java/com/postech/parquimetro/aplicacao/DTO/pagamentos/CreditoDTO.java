@@ -1,11 +1,13 @@
 package com.postech.parquimetro.aplicacao.DTO.pagamentos;
 
-import com.postech.parquimetro.dominio.entities.enums.TiposDePagamento;
+import com.postech.parquimetro.dominio.enums.TiposDePagamento;
 import com.postech.parquimetro.view.form.pagamentos.CreditoForm;
 import com.postech.parquimetro.view.form.pagamentos.EditarCreditoForm;
 
+import java.util.UUID;
+
 public record CreditoDTO(
-	String condutor,
+	UUID condutor,
 	String numeroDoCartao,
 	String nomeDoTitular,
 	String bandeira,

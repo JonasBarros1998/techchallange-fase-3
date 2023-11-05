@@ -1,0 +1,832 @@
+openapi: 3.0.0
+info:
+  title: parquimetro
+  version: 1.0.0
+servers:
+  - url: http://54.208.77.73
+  - url: http://localhost:8080
+tags:
+  - name: parquimetro
+    description: Sistema de gerenciamento de estacionamento.
+
+  - name: parquimetro > pagamento
+    description: Gerenciamento de pagamentos dos condutores
+  - name: parquimetro > parquimetro
+    description: gerenciamento do parquimetro
+  - name: parquimetro > condutores
+    description: Gerenciamento dos condutores
+  - name: parquimetro > automoveis
+    description: Gerenciamendo de automóveis
+paths:
+  /api/pagamentos/credito/{id}:
+    put:
+      tags:
+        - parquimetro > pagamento
+      summary: Editar cartão de crédito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nomeDoTitular: Jose
+                dataDeValidade: 05/2032
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do tipo de pagamento
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  nomeDoTitular:
+                    type: string
+                  username:
+                    type: string
+
+
+  /api/pagamentos/debito/{id}:
+    put:
+      tags:
+        - parquimetro > pagamento
+      summary: Editar cartão de débito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nomeDoTitular: Jose Lopes
+                dataDeValidade: 05/2040
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do tipo de pagamento
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              schema:
+                properties:
+                  nomeDoTitular:
+                    type: string
+                  username:
+                    type: string
+
+
+  /api/pagamentos/metodoDePagamento/{id}:
+    delete:
+      tags:
+        - parquimetro > pagamento
+      summary: Remover o método de pagamento
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do método de pagamento
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+
+  /api/pagamentos/credito:
+    post:
+      tags:
+        - parquimetro > pagamento
+      summary: Pagamento com cartão de credito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: objeto que deve ser enviado para incluir um novo cartao de credito
+              properties:
+                condutor:
+                  type: string
+                  description: id do condutor
+                numeroDoCartao:
+                  type: string
+                  description: número do cartão de credito
+                nomeDoTitular:
+                  type: string
+                  description: nome do titular do cartão
+                bandeira:
+                  type: string
+                  description: nome da bandeira do cartão de credito
+                codigoDeSeguranca:
+                  type: string
+                  description: código de segurança do cartão
+                dataDeValidade:
+                  type: string
+                  description: data de validade do cartão
+                metodoDePagamento:
+                  type: string
+                  description: tipo do pagamento que está sendo cadastrado
+              example:
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+                numeroDoCartao: "1010060329968851"
+                nomeDoTitular: "Jose Lopes"
+                bandeira: "Master Card"
+                codigoDeSeguranca: "458"
+                dataDeValidade: "01/2024"
+                metodoDePagamento: "CREDITO"
+
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: {
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "numeroDoCartao": "1010060329968852",
+                "nomeDoTitular": "Seu Jose",
+                "bandeira": "Master Card",
+                "codigoDeSeguranca": "459",
+                "dataDeVencimento": "01/2024",
+                "metodoDePagamento": "CREDITO"
+              }
+
+  /api/pagamentos/debito:
+    post:
+      tags:
+        - parquimetro > pagamento
+      summary: Pagamento com cartão de debito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: objeto que deve ser enviado para incluir um novo cartao de credito
+              properties:
+                condutor:
+                  type: string
+                  description: id do condutor
+                numeroDoCartao:
+                  type: string
+                  description: número do cartão de credito
+                nomeDoTitular:
+                  type: string
+                  description: nome do titular do cartão
+                bandeira:
+                  type: string
+                  description: nome da bandeira do cartão de credito
+                codigoDeSeguranca:
+                  type: string
+                  description: código de segurança do cartão
+                dataDeValidade:
+                  type: string
+                  description: data de validade do cartão
+                metodoDePagamento:
+                  type: string
+                  description: tipo do pagamento que está sendo cadastrado
+              example:
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+                numeroDoCartao: "0002060329968855"
+                nomeDoTitular: Seu Jose Callazans
+                codigoDeSeguranca: "006"
+                dataDeValidade: "03/2032"
+                nomeDaInstituicaoFinanceira: "Nubank"
+                bandeira: "Master Card"
+      responses:
+        '200':
+          description: Execução executada com sucesso
+          content:
+            application/json:
+              example: {
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "numeroDoCartao": "0002060329968856",
+                "nomeDoTitular": "Jose Lopes",
+                "codigoDeSeguranca": "007",
+                "dataDeValidade": "03/2032",
+                "nomeDaInstituicaoFinanceira": "Nubank",
+                "bandeira": "Master Card"
+              }
+  /api/pagamentos/pix:
+    post:
+      tags:
+        - parquimetro > pagamento
+      summary: Pagamento com PIX
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                condutor:
+                  type: string
+                  description: id do condutor
+                chavePix:
+                  type: string
+                  description: chave do pix
+              example:
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+                chavePix: "jose.pix@gmail.com"
+
+      responses:
+        '200':
+          description: requisição executada com sucesso
+          content:
+            application/json:
+              example: {
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "chavePix": "jose.pix@gmail.com"
+              }
+
+  /api/pagamentos/{id}:
+    get:
+      tags:
+        - parquimetro > pagamento
+      summary: Listar todos os metodos de pagamento de um determinado condutor
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: [{
+                debitos: [{
+                  "metodoDePagamentoID": "979d086c-8e0b-4fe1-be80-025a45c81777",
+                  "id": "538235d6-11dc-411c-bf6e-c7020a2771f2",
+                  "nomeDoTitular": "Jose Lopes",
+                  "dataDeValidade": "03/2032",
+                  "tipo": "DEBITO"
+                }],
+                "creditos": [{
+                  "metodoDePagamentoID": "7bbedb1f-2a6d-4bdd-acff-b6f3a16747f5",
+                  "id": "c0970bf7-ea24-442d-94a8-974fb7979db4",
+                  "nomeDoTitular": "Aslan Callazans",
+                  "dataDeValidade": "05/2031",
+                  "tipo": "CREDITO"
+                }],
+                "listarPix": [{
+                  "metodoDePagamentoID": "f25b0b7d-6de2-4c55-b4e8-8445ccc02ca5",
+                  "id": "338d5354-42c0-4a21-a884-7f7d01161bbc",
+                  "tipo": "PIX",
+                  "chavePix": "joselop..."
+                }]
+              }]
+
+  /api/parquimetro/tempoFixo:
+    post:
+      tags:
+        - parquimetro > parquimetro
+      summary: estacionamento por tempo fixo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                endereco:
+                  properties:
+                    rua:
+                      type: string
+                      description: nome da rua que o veiculo ira estacionar
+                      nullable: false
+                    cidade:
+                      type: string
+                      description: nome da cidade
+                      nullable: false
+                    estado:
+                      type: string
+                      description: unidade federativa do estado
+                      example: SP, RJ, SC...
+                      nullable: false
+                    cep:
+                      type: string
+                      description: cep do bairro
+                      example: 12300139832
+                      nullable: false
+                    descricao:
+                      type: string
+                      nullable: true
+                      description: adicione uma descrição sobre a região onde o seu automovel está estacionado
+                temporizador:
+                  properties:
+                    tempoInicial:
+                      type: string
+                      example: 2023-11-04T12:20
+                      nullable: false
+                      description: adicionar no mesmo formado da ISO 8601
+
+                    tempoFinal:
+                      type: string
+                      example: 2023-11-04T12:30
+                      nullable: false
+                      description: adicionar no mesmo formado da ISO 8601
+                condutor:
+                  type: string
+                  nullable: false
+                metodoDePagamento:
+                  type: string
+                  description: | 
+                    adicione o id do metodo de pagamento. Você pode ver quais são executando a seguinte url
+                    /api/pagamentos/{id}
+
+                  nullable: false
+              example: {
+                "endereco": {
+                  "rua": "Rua 123",
+                  "cidade": "São Paulo",
+                  "estado": "SP",
+                  "cep": "04354447",
+                  "descricao": "próximo ao restaurante 123"
+                },
+                "temporizador": {
+                  "tempoInicial": "2023-11-04T12:20",
+                  "tempoFinal": "2023-11-04T12:30"
+                },
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "metodoDePagamento": "f25b0b7d-6de2-4c55-b4e8-8445ccc02ca5"
+              }
+
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: {
+                "endereco": {
+                  "rua": "Rua 123",
+                  "cidade": "São Paulo",
+                  "estado": "SP",
+                  "cep": "04354447",
+                  "descricao": "próximo ao restaurante 123"
+                },
+                "temporizador": {
+                  "tempoInicial": "2023-11-04T12:20",
+                  "tempoFinal": "2023-11-04T12:30"
+                },
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "metodoDePagamento": "f25b0b7d-6de2-4c55-b4e8-8445ccc02ca5"
+              }
+
+  /api/parquimetro/tempoVariavel/iniciar:
+    post:
+      tags:
+        - parquimetro > parquimetro
+      summary: Tempo Variavel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                endereco:
+                  properties:
+                    rua:
+                      type: string
+                      description: nome da rua que o veiculo ira estacionar
+                      nullable: false
+                    cidade:
+                      type: string
+                      description: nome da cidade
+                      nullable: false
+                    estado:
+                      type: string
+                      description: unidade federativa do estado
+                      example: SP, RJ, SC...
+                      nullable: false
+                    cep:
+                      type: string
+                      description: cep do bairro
+                      example: 12300139832
+                      nullable: false
+                    descricao:
+                      type: string
+                      nullable: true
+                      description: adicione uma descrição sobre a região onde o seu automovel está estacionado
+                condutor:
+                  type: string
+                  nullable: false
+                metodoDePagamento:
+                  type: string
+                  description: |
+                    adicione o id do metodo de pagamento. Você pode ver quais são executando a seguinte url
+                    /api/pagamentos/{id}
+              example: {
+                "endereco": {
+                  "rua": "Rua 123",
+                  "cidade": "São Paulo",
+                  "estado": "SP",
+                  "cep": "04354447",
+                  "descricao": "próximo ao restaurante 123"
+                },
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "metodoDePagamento": "f25b0b7d-6de2-4c55-b4e8-8445ccc02ca5"
+              }
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: {
+                "endereco": {
+                  "rua": "Rua 123",
+                  "cidade": "São Paulo",
+                  "estado": "SP",
+                  "cep": "04354447",
+                  "descricao": "em frente a loja 123"
+                },
+                "condutor": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "metodoDePagamento": "7bbedb1f-2a6d-4bdd-acff-b6f3a16747f5"
+              }
+
+  /api/parquimetro/tempoVariavel/finalizar:
+    post:
+      tags:
+        - parquimetro > parquimetro
+      summary: finalizar tempo variavel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                agendamentoID:
+                  type: string
+                  nullable: false
+                  description: | 
+                    ID do agendamento. Você consegue listar todos os agendamentos ativos
+                    utilizando a seguinte url /api/condutores/registroDeEstacionamento/{id}
+              example: {
+                agendamentoID: d7099bc9-d964-4534-8dee-9ab5f0f2f2a0
+              }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: {
+                agendamentoID: d7099bc9-d964-4534-8dee-9ab5f0f2f2a0
+              }
+  /api/condutores/registroDeEstacionamento/{id}:
+    get:
+      tags:
+        - parquimetro > parquimetro
+      summary: Pesquisar todos os registros de estacionamento ativos de um determinado condutor
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: [{
+                "id": "f31ede54-4fe0-425e-be83-4099a7020b7d",
+                "tempoInicial": "2023-11-04T20:56:48.551069",
+                "nomeDoEventoParaAlertas": "alertaParaEnviarEmail_1b0b0120-eed8-46e3-b98d-50c3a8c07074",
+                "nomeDoEventoParaAgendamento": "agendamentoPorTempoVariavel_82cc0482-099a-4688-b874-b54bbfe8d390",
+                "tempoFinal": null,
+              }, {
+                "id": "f31ede54-4fe0-425e-be83-4099a7020b7d",
+                "tempoInicial": "2023-11-04T20:56:48.551069",
+                "nomeDoEventoParaAlertas": "alertaParaEnviarEmail_1b0b0120-eed8-46e3-b98d-50c3a8c07074",
+                "nomeDoEventoParaAgendamento": "agendamentoPorTempoVariavel_82cc0482-099a-4688-b874-b54bbfe8d390",
+                "tempoFinal": "2023-11-04T23:50:00",
+              }]
+  /api/enderecos/{id}:
+    put:
+      tags:
+        - parquimetro > condutores
+      summary: Editar o endereço do condutor
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do condutor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rua:
+                  type: string
+                  description: nome da rua que o veiculo ira estacionar
+                  nullable: false
+                cidade:
+                  type: string
+                  description: nome da cidade
+                  nullable: false
+                estado:
+                  type: string
+                  description: unidade federativa do estado
+                  example: SP, RJ, SC...
+                  nullable: false
+                cep:
+                  type: string
+                  description: cep do bairro
+                  example: 12300139832
+                  nullable: false
+                descricao:
+                  type: string
+                  nullable: true
+                  description: adicione uma descrição sobre a região onde o seu automovel está estacionado
+              example: {
+                rua: "Rua Jose",
+                numero: "45",
+                cidade: "São Paulo",
+                estado: "SP",
+                cep: "04354447",
+                complemento: ""
+              }
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: {
+                rua: "Rua Jose",
+                numero: "45",
+                cidade: "São Paulo",
+                estado: "SP",
+                cep: "04354447",
+                complemento: ""
+              }
+  /api/condutores/{id}:
+    delete:
+      tags:
+        - parquimetro > condutores
+      summary: | 
+        Desativar condutores. Estou utilizando um metodo do 
+        tipo DELETE, mas na realidade estou apenas desativando
+        o condutor.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do condutor
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json: {}
+  /api/condutores:
+    get:
+      tags:
+        - parquimetro > condutores
+      summary: Pesquisar todos os condutores ativos
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: [{
+                "id": "1045c46e-2898-496a-88c8-f46f46c05466",
+                "email": "jose@gmail.com",
+                "nome": "Jose Lopes",
+                "telefone": "00845678930",
+                "statusDoCondutor": true,
+                "endereco": {
+                  "rua": "Rua 123",
+                  "numero": "124",
+                  "cidade": "São Paulo",
+                  "estado": "SP",
+                  "cep": "04354447",
+                  "complemento": "Torre B"
+                },
+                "automoveis": [{}]
+              }]
+    post:
+      tags:
+        - parquimetro > condutores
+      summary: Registro de condutores e seus endereços
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  nullable: false
+                nome:
+                  type: string
+                  nullable: false
+                cpf:
+                  type: string
+                  nullable: false
+                telefone:
+                  type: string
+                  nullable: false
+                endereco:
+                  type: object
+                  properties:
+                    rua:
+                      type: string
+                      description: nome da rua que o veiculo ira estacionar
+                      nullable: false
+                    cidade:
+                      type: string
+                      description: nome da cidade
+                      nullable: false
+                    estado:
+                      type: string
+                      description: unidade federativa do estado
+                      example: SP, RJ, SC...
+                      nullable: false
+                    cep:
+                      type: string
+                      description: cep do bairro
+                      example: 12300139832
+                      nullable: false
+                    descricao:
+                      type: string
+                      nullable: true
+                      description: adicione uma descrição sobre a região onde o seu automovel está estacionado
+            example: {
+              "email": "jose@gmail.com",
+              "nome": "Jose Lopes",
+              "cpf": "12316285037",
+              "telefone": "11845678930",
+              "endereco": {
+                "rua": "Rua 123",
+                "numero": "124",
+                "cidade": "São Paulo",
+                "estado": "SP",
+                "cep": "04354447",
+                "complemento": "Torre B"
+              }
+            }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: {
+                "email": "jose@gmail.com",
+                "nome": "Jose Lopes",
+                "cpf": "12316285037",
+                "telefone": "11845678930",
+                "endereco": {
+                  "rua": "Rua 123",
+                  "numero": "124",
+                  "cidade": "São Paulo",
+                  "estado": "SP",
+                  "cep": "04354447",
+                  "complemento": "Torre B"
+                }
+              }
+  /api/condutores/{condutor_id}:
+    put:
+      tags:
+        - parquimetro > condutores
+      summary: Editar condutor
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do condutor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  nullable: false
+                nome:
+                  type: string
+                  nullable: false
+                cpf:
+                  type: string
+                  nullable: false
+                telefone:
+                  type: string
+                  nullable: false
+              example: {
+                "email": "jose@gmail.com",
+                "nome": "Jose Lopes",
+                "cpf": "12316285037",
+                "telefone": "11845678930"
+              }
+      responses:
+        '200':
+          description: Requisição executada com sucesso
+          content:
+            application/json:
+              example: {
+                "email": "jose@gmail.com",
+                "nome": "Jose Lopes",
+                "cpf": "12316285037",
+                "telefone": "11845678930"
+              }
+  /api/automoveis:
+    post:
+      tags:
+        - parquimetro > automoveis
+      summary: Registro de automóveis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                placa:
+                  type: string
+                  nullable: false
+                modelo:
+                  type: string
+                  nullable: false
+                tipoDoAutomovel:
+                  type: string
+                  nullable: false
+                condutor:
+                  type: string
+                  nullable: false
+              example: {
+                placa: "abcd234",
+                modelo: "Ram 1500",
+                tipoDoAutomovel: "carro",
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+              }
+
+      responses:
+        '200':
+          description: Request executada com sucesso
+          content:
+            application/json:
+              example: {
+                placa: "abcd234",
+                modelo: "Ram 1500",
+                tipoDoAutomovel: "carro",
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+              }
+  /api/automoveis/{id}:
+    delete:
+      tags:
+        - parquimetro > automoveis
+      summary: Remover o automóvel do condutor
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do automovel
+      responses:
+        '200':
+          description: Request executada com sucesso
+          content:
+            application/json:
+              example: {}
+
+  /api/automoveis/{automovel_id}:
+    put:
+      tags:
+        - parquimetro > automoveis
+      summary: Editar automovel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                placa:
+                  type: string
+                  nullable: false
+                modelo:
+                  type: string
+                  nullable: false
+                tipoDoAutomovel:
+                  type: string
+                  nullable: false
+                condutor:
+                  type: string
+                  nullable: false
+              example: {
+                placa: "abcd234",
+                modelo: "Ram 1500",
+                tipoDoAutomovel: "carro",
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+              }
+      responses:
+        '200':
+          description: Request executada com sucesso
+          content:
+            application/json:
+              example: {
+                placa: "abcd234",
+                modelo: "Ram 1500",
+                tipoDoAutomovel: "carro",
+                condutor: "1045c46e-2898-496a-88c8-f46f46c05466"
+              }
+
+
+

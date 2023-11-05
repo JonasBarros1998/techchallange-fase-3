@@ -2,6 +2,8 @@ package com.postech.parquimetro.aplicacao.DTO;
 
 import com.postech.parquimetro.view.form.EnderecoForm;
 
+import java.util.UUID;
+
 public record EnderecoDTO(
 	String rua,
 	String numero,
