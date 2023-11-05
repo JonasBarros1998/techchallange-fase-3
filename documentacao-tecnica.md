@@ -78,7 +78,7 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 
   1° Executamos o endpoint `/api/parquimetro/tempoVariavel/iniciar`, com isso criamos 1 evento do tipo intervalo no event bridge nomeado como (alertaParaEnviarEmail_)
 
-  2° A cada 60 minutos o evento envia uma mensagem a fila de alertas chamada de `postech_enviar_email` que a aplicação irá ler essa mensagem e então iremos enviará um e-mail dizendo que o tempo do estácionamento foi renovado.
+  2° A cada 60 minutos o evento envia uma mensagem a fila de alertas chamada de `postech_enviar_email` que a aplicação irá ler essa mensagem e então iremos enviará um e-mail dizendo que o tempo do estácionamento foi renovado. Isso irá ocorrer até que o condutor encerre o tempo do estacionamento
 
   3° Ao executar a url `/api/parquimetro/tempoVariavel/finalizar` a aplicação enviará um e-mail ao usuário com o valor do pagamento, armazenará as informações necessaŕias no banco de dados e por fim apagará o evento no event bridge.
   
