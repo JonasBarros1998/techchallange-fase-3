@@ -51,7 +51,7 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 
 - Utilizamos os seguintes recursos da AWS: ECS, Fargate, SQS para envio de alertas, SQS para finalização do agendamento (utilizado apenas para estacionamento por tempo fixo) e por fim o Event Bridge.
 - Utilizaria exatamente essa arquitetura para uma aplicação escalável, porém com algumas ressalvas. Aumentaria o número de containers de 1 para pelo menos 6 containers, incluiria também um API Gateway, Load balance e por fim criaria uma VPC para incluir todos esses recursos. Por último, configuraria apenas um endereço público a partir do API Gateway para os consumidores da API poderem acessá-la corretamente.
-- **event bridge**: configurei trẽs tipos de roles.
+- **event bridge**: configurei três tipos de roles.
 1° role foi para envio de e-mail, que será ativada sempre 10 minutos antes do tempo do estacionamento expirar que é utilizada apenas para o estacionamento por tempo fixo,
 2° role é focada na finalização do agendamento
 3° role criamos um intervalo de tempo de 60 minutos para estacionamento por tempo variável
