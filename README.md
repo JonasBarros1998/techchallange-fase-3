@@ -96,13 +96,13 @@ Primeiro específiquei o padrão de horário em que o consumidor nos envia `Zone
 
 
 ## Vídeo
-1° vídeo: mostrando as validações e regras de negócio e iniciando um estacionamento por tempo fixo e por tempo variável
+1° vídeo: validações e regras de negócio e iniciando um estacionamento por tempo variável
 
 2° vídeo: iniciando o estacionamento por tempo variável e confirmando estacionamento por tempo fixo
 
-3° vídeo: confirmando o estacionamento por tempo variável  
+3° vídeo: confirmando o estacionamento por tempo variável
 
-3° vídeo: mostrando a criptografia do banco de dados
+4° vídeo: criptografia do banco de dados
 
 *todos os links estão no PDF enviado a plataforma da FIAP*
 
