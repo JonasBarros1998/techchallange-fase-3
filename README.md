@@ -1,6 +1,6 @@
 # Parquimetro - fiap postech fase 3
 
-## Observaçoes gerais
+## Observações gerais
 - Os detalhes da entrada e saída de cada endpoint, você verá no arquivo [documentacao.json](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/documentacao.yaml) construído com a especificação openapi 3.0
 - Todos os vídeos foram gravados, foi utilizado a aplicação que enviada ao ECS e se conenctando ao RDS PostgreSQL, Event Bridge e AWS SQS
 
@@ -12,8 +12,9 @@
 - `POST: /api/parquimetro/tempoVariavel`
 
 ## Regras de negócio
-- Se o usuário iniciar um novo estacionamento por tempo variável e enviar o ID de um método de pagamento do tipo PIX, vamos enviar um retorno impedindo inicializar o temporizador do estacionamento.
-  De acordo com um dos requisitos, só é permitido enviar o método de pagamento do tipo PIX, utilizando o estacionamento por tempo fixo
+
+#### Método de pagamento
+Se o usuário iniciar um novo estacionamento por tempo variável e enviar o ID de um método de pagamento do tipo PIX, vamos enviar um retorno impedindo inicializar o temporizador do estacionamento. De acordo com um dos requisitos, só é permitido enviar o método de pagamento do tipo PIX, utilizando o estacionamento por tempo fixo
   
 retorno da API:
 ````
@@ -23,8 +24,8 @@ retorno da API:
   "error": "Nao e permitido selecionar metodo de pagamento do tipo PIX para estacionamentos por tempo variavel"
 }]
 ````
-
-- Também não será permitido a inicialização de estacionamento por tempo fixo ou variável, se o condutor não tiver veiculos cadastros, ou métodos de pagamento condizentes com o tipo de estácionamento que ele escolheu.
+#### Veículos
+Também não será permitido a inicialização de estacionamento por tempo fixo ou variável, se o condutor não tiver veiculos cadastros, ou métodos de pagamento condizentes com o tipo de estácionamento que ele escolheu.
 
 Retorno da API, caso o usuário não cadastrou nenhum veículo
 ````
@@ -42,7 +43,7 @@ Retorno da API, caso o usuário não cadastrou nenhum método de pagamento
 }]
 ````
 
-- Calculo do preço do estacionamento
+#### Calculo do preço do estacionamento
 De acordo com o zona azul, o preço por 60 minutos estacionado, é de R$ 6,08. Mas se o condutor permanecer estácionado por 30 minutos, ou 2 horas quanto ele pagaria? Para isso utilizamos a regra de três. Veja o exemplo abaixo
 
 Se o condutor ficar estacionado por 60 minutos, ele pagará R$ 6,08, porém se ele ficar estacionado por 16 minutos, quanto ele pagará?
@@ -63,9 +64,8 @@ x = R$ 1,62
 Então se o condutor ficar 16 minutos estacionado, ele pagará R$ 1,62. 
 
 Toda o calculo dessa regra está contida dentro da classe [CalcularValorDoPagamento.java](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/dominio/CalcularValorDoPagamento.java)
-## 
 
-- Envio de e-mails quando o estacionamento está a expirar
+#### Envio de e-mails quando o estacionamento está próximo de expirar
 Se o condutor escolher o tipo de estácionamento por tempo fixo, quando faltarem **10 minutos** para o tempo se encerrar, vamos enviar um e-mail com a seguinte informação **Falta pouco para se encerrar o tempo do seu estacionamento**
 Se o condutor escolhler o tipo de estacionamento por tempo variavel, a cada **60 minutos** enviaremos um e-mail com a seguinte informação **Acrescimo de 60 minutos no tempo do seu estacionamento** 
 
