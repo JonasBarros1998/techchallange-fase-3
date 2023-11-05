@@ -3,6 +3,7 @@
 ## Observações gerais
 - Os detalhes da entrada e saída de cada endpoint, você verá no arquivo [documentacao.json](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/documentacao.yaml) construído com a especificação openapi 3.0
 - Todos os vídeos foram gravados, foi utilizado a aplicação que enviada ao ECS e se conenctando ao RDS PostgreSQL, Event Bridge e AWS SQS
+- Todos os vídeos com os links adicionados no PDF que foi enviado na plataforma da FIAP
 
 ## Inicio rápido
 #### Para agendar rápidamente um estacionamendo, execute em sequência os seguintes endpoints abaixo
@@ -81,8 +82,8 @@ Segue o link do vídeo mostrando todas essas informações (validações, regras
 
 ## Como iniciar um estactionamento por tempo fixo ou por tempo variável
 - Após o condutor passar por todas as regras de negócio e validações listadas acima, ele poderá iniciar o primeiro estacionamento. Seja ele por tempo fixo ou por tempo variável.
-- Estacionamento por tempo variável [vídeo]()
-- Estacionamento por tempo fixo [vídeo]()
+- Estacionamento por tempo variável (vídeo: Iniciando um estacionamento por tempo variável e validações)
+- Estacionamento por tempo fixo  (vídeo: Iniciando um estacionamento por tempo fixo e validações)
 
 ## Padronização de horários UTC e UTC-3
 
