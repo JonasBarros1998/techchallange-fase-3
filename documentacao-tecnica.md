@@ -42,7 +42,7 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 
 ### Arquitetura do banco de dados
 - O banco de dados foi criado dentro de uma VPC ou seja sem acesso ao mundo externo
-- Para que o custo fosse menor possível, utilizei a arquitetura gratuita do banco RDS com as seguintes configurações: db.t4g.micro, 2vCPU, 2 GB de RAM e 20GB de armazenamento. Mas para uma aplicação realmente escalável, poderiamos mudar os recursos. Optaria por utilizar um banco aurora serveless(Compátivel com PostgreSQL) com no mínimo 2GB de ACU e no máximo 6GB de ACU, com implantação multi-AZ e por fim utilizaria um RDS Proxy para diminuir o tempo de conexão entre aplicação e o banco de dados.
+- Para que o custo fosse menor possível, utilizei a arquitetura gratuita do banco RDS com as seguintes configurações: db.t4g.micro, 2vCPU, 2 GB de RAM e 20GB de armazenamento. Mas para uma aplicação realmente escalável, poderíamos mudar os recursos. Optaria por utilizar um banco aurora serveless(Compatível com PostgreSQL) com no mínimo 2GB de ACU e no máximo 6GB de ACU, com implantação multi-AZ e por fim utilizaria um RDS Proxy para diminuir o tempo de conexão entre aplicação e o banco de dados.
 
 ### Arquitetura da aplicação
 ![arquitetura da aplicação](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/parquimetro_arquitetura.png?alt=media&token=084afca0-aa1f-4577-8cce-9a1ce4e5b6f1)
@@ -50,10 +50,10 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 [link da arquitetura](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/parquimetro_arquitetura.png?alt=media&token=084afca0-aa1f-4577-8cce-9a1ce4e5b6f1)
 
 - Utilizamos os seguintes recursos da AWS: ECS, Fargate, SQS para envio de alertas, SQS para finalização do agendamento (utilizado apenas para estacionamento por tempo fixo) e por fim o Event Bridge.
-- Utilizaria exatamente essa arquitetura para uma aplicação escalavel, porém com algumas ressalvas. Aumentaria o número de containers de 1 para pelo menos 6 containers, incluiria também um API Gateway, Load balance e por fim criaria uma VPC para incluir todos esses recursos. Por último configuraria apenas um endereço público apartir do API Gateway para os consumidores da API poderem acessá-la corretamente. 
+- Utilizaria exatamente essa arquitetura para uma aplicação escalável, porém com algumas ressalvas. Aumentaria o número de containers de 1 para pelo menos 6 containers, incluiria também um API Gateway, Load balance e por fim criaria uma VPC para incluir todos esses recursos. Por último, configuraria apenas um endereço público a partir do API Gateway para os consumidores da API poderem acessá-la corretamente. 
 
 ### Segurança
-- Para criptografia e desccriptografia dos dados, estou utilizando o algoritmo AES/CFB/PKCS5Padding, um dos mais seguros atualmente. Também poderia utilizar o padrão de chave pública e chave privada, mas para isso o consumidor teria que enviar a chave pública para nós fazermos a validação e descriptografar dados. Mas esse forma não é muito habitual comparando com o cenário que estamos desenvolvendo.
+- Para criptografia e descriptografia dos dados, estou utilizando o algoritmo AES/CFB/PKCS5Padding, um dos mais seguros atualmente. Também poderia utilizar o padrão de chave pública e chave privada, mas para isso o consumidor teria que enviar a chave pública para nós fazermos a validação e descriptografar dados. Mas dessa forma não é muito habitual comparando com o cenário que estamos desenvolvendo.
 - Ao subir o nosso ambiente, criamos políticas de acesso utilizando apenas os recursos que a nossa aplicação irá utilizar. Veja abaixo cada acesso que utilizei na aplicação
 - Acesso leitura ao elastic container registry
 ```json
