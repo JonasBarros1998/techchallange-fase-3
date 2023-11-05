@@ -78,8 +78,6 @@ Se o condutor escolhler o tipo de estacionamento por tempo variavel, a cada **60
 - Como o nosso sistema permite cadastro de informações pessoais dos nossos condutores, estou criptografando cada informação sensível relacionada aos cartões de crédito e débito e o PIX. Também não apresentamos essas informações por completo quando
 a url `GET: /api/pagamentos/{dondutor_id}` é chamada pelo consumidor  
 
-Segue o link do vídeo mostrando todas essas informações (validações, regras de negócio e segurança) [vídeo]()
-
 ## Como iniciar um estactionamento por tempo fixo ou por tempo variável
 - Após o condutor passar por todas as regras de negócio e validações listadas acima, ele poderá iniciar o primeiro estacionamento. Seja ele por tempo fixo ou por tempo variável.
 - Estacionamento por tempo variável (vídeo: Iniciando um estacionamento por tempo variável e validações)
@@ -93,9 +91,16 @@ uma conversão conversão.
 Primeiro específiquei o padrão de horário em que o consumidor nos envia `ZonedDateTime agendamentoUTC = tempoFinal.atZone(ZoneOffset.ofHours(-3));`, em seguida fiz a conversão para UTC 
 `LocalDateTime agendamentoParaAlerta = agendamentoUTC.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime()` e então enviamos o evento ao `event bridge`. Veja como fizemos essa tratamento na classe [CriarCronJob.java](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/dominio/CriarCronJob.java)
 
+## Desativar cliente
+- Apesar do endpoint está do verbo `DELETE` Ao invés de remover o cliente e todos os dados deles relacionados, estamos apenas desativando o cliente e mantendo os dados do mesmo.
 
 
-
+## Vídeo
+1° vídeo: mostrando as validações e regras de negócio e iniciando um estacionamento por tempo fixo e por tempo variável
+2° vídeo: iniciando o estacionamento por tempo variavel e confirmando estacionamento por tempo fixo
+3° vídeo: confirmando o estacionamento por tempo variavel  
+3° vídeo: mostrando a criptografia do banco de dados
+*todos os links estão no PDF enviado a plataforma da FIAP*
 
 
 
