@@ -1,0 +1,29 @@
+app:
+  date:
+    format: yyyy-MM-dd
+spring:
+  datasource:
+    driver-class-name: "org.postgresql.Driver"
+    username:
+    password:
+    url:
+  web:
+    locale: pt_BR
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  cloud:
+    config:
+      import:
+
+aws:
+  sqs:
+    enviar_email_arn:
+    remover_evento_arn:
+
+seguranca:
+  chave:
+  algoritimo:
+  initVector:
+
