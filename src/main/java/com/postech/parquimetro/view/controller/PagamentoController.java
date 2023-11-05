@@ -56,12 +56,6 @@ public class PagamentoController {
 		return ResponseEntity.status(HttpStatus.OK).body(credito);
 	}
 
-	@DeleteMapping(value = "/metodoDePagamento/{metodoDePagamentoID}")
-	public ResponseEntity<Void> removerMetodoDePagamento(@PathVariable UUID metodoDePagamentoID) {
-		this.gerenciarPagamento.removerMetodoDePagamento(metodoDePagamentoID);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-
 	@GetMapping("/{condutorID}")
 	public ResponseEntity<ListarTodosOsMetodosDePagamentoDTO> listarTodosOsMetodosDePagamento(@PathVariable UUID condutorID) {
 		ListarTodosOsMetodosDePagamentoDTO listarTodosOsPagamentos  = this.gerenciarPagamento.pesquisarTodosOsMetodosDePagamento(condutorID);

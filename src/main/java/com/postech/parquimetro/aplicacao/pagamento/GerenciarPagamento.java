@@ -135,32 +135,6 @@ public class GerenciarPagamento {
 		return debitoForm;
 	}
 
-	public void removerMetodoDePagamento(UUID metodoDePagamentoID) {
-
-		PesquisarPorUmMetodoDePagamentoDoCondutor identificarQualOMetodoDePagamento = this.pagamentoRepository
-				.pesquisarMetodoDePagamento(metodoDePagamentoID)
-			.orElseThrow(() -> new ConteudoNaoEncontrado("metodo de pagamento nao encontrado"));
-
-		var metodosDePagamentos = this.pagamentoRepository
-			.pesquisarTodosOsTipoDePagamentoPorIdDoCondutor(identificarQualOMetodoDePagamento.getCondutorId());
-
-		var quantidadeTotalDosMetodosDePagamento = new VerificarQuantidadeTotalDosMetodosDePagamento();
-		Boolean podeRemoverMetodoDePagamento = quantidadeTotalDosMetodosDePagamento.podeRemoverMetodoDePagamento(
-			metodosDePagamentos,
-			identificarQualOMetodoDePagamento.getTipoDePagamento()
-		);
-
-		if(podeRemoverMetodoDePagamento == true) {
-			this.pagamentoRepository.deleteById(metodoDePagamentoID);
-			return;
-		}
-
-		throw new CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion(
-			"O condutor nao pode ficar sem nenhum metodo de pagamento do tipo Credito ou Debito ja cadsatrado " +
-				"Adicione outro metodo de pagamento para que assim consiga remover este metodo"
-		);
-	}
-
 	public ListarTodosOsMetodosDePagamentoDTO pesquisarTodosOsMetodosDePagamento(UUID condutorID) {
 		List<MetodoDePagamento> metodosDePagamento = this.pagamentoRepository.findByCondutorId(condutorID)
 			.orElseThrow(() -> new ConteudoNaoEncontrado("condutor nao encontrado"));

@@ -26,4 +26,8 @@ public interface PagamentoRepository extends JpaRepository<MetodoDePagamento, UU
 		"from MetodoDePagamento metodoDePagamento " +
 		"where metodoDePagamento.id = :id")
 	Optional<PesquisarPorUmMetodoDePagamentoDoCondutor> pesquisarMetodoDePagamento(UUID id);
+
+	@Query(value = "select metodoDePagamento from MetodoDePagamento metodoDePagamento " +
+		"where metodoDePagamento.condutor.id = :condutorID and metodoDePagamento.id = :id")
+	Optional<MetodoDePagamento> pesquisarMetodoDePagamentoDoCondutor(UUID id, UUID condutorID);
 }

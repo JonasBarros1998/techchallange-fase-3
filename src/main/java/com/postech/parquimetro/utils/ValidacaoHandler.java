@@ -2,7 +2,9 @@ package com.postech.parquimetro.utils;
 
 import com.postech.parquimetro.aplicacao.exceptions.CondutorDeveTerPeloMenosUmMetodoDePatamentoExcpetion;
 import com.postech.parquimetro.aplicacao.exceptions.ConteudoDuplicado;
+import com.postech.parquimetro.dominio.exceptions.MetodoDePagamentoInvalido;
 import com.postech.parquimetro.dominio.exceptions.PagamentosNaoEncontradoException;
+import com.postech.parquimetro.dominio.exceptions.VeiculosNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -86,6 +88,30 @@ public class ValidacaoHandler {
 		List<ErroForm> erroFormList = new ArrayList<>();
 		ErroForm erroForm = new ErroForm(
 			"NaoExistePagamentosRegistradosExcetion",
+			exception.getMessage());
+		erroFormList.add(erroForm);
+
+		return erroFormList;
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MetodoDePagamentoInvalido.class)
+	public List<ErroForm> handler(MetodoDePagamentoInvalido exception) {
+		List<ErroForm> erroFormList = new ArrayList<>();
+		ErroForm erroForm = new ErroForm(
+			"MetodoDePagamentoInvalido",
+			exception.getMessage());
+		erroFormList.add(erroForm);
+
+		return erroFormList;
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(VeiculosNaoEncontradoException.class)
+	public List<ErroForm> handler(VeiculosNaoEncontradoException exception) {
+		List<ErroForm> erroFormList = new ArrayList<>();
+		ErroForm erroForm = new ErroForm(
+			"VeiculosNaoEncontradoException",
 			exception.getMessage());
 		erroFormList.add(erroForm);
 

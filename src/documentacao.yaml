@@ -83,23 +83,6 @@ paths:
                   username:
                     type: string
 
-
-  /api/pagamentos/metodoDePagamento/{id}:
-    delete:
-      tags:
-        - parquimetro > pagamento
-      summary: Remover o método de pagamento
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-          description: ID do método de pagamento
-      responses:
-        '200':
-          description: Requisição executada com sucesso
-
   /api/pagamentos/credito:
     post:
       tags:

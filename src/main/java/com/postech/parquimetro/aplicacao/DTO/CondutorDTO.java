@@ -65,7 +65,7 @@ public class CondutorDTO {
 				condutor.getEndereco().getNumero(),
 				condutor.getEndereco().getCidade(),
 				condutor.getEndereco().getEstado(),
-				condutor.getEndereco().getNumero(),
+				condutor.getEndereco().getCep(),
 				condutor.getEndereco().getComplemento()
 			);
 

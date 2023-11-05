@@ -18,10 +18,7 @@ public class CriarCronJob {
 		 * e recebemos da API o padrao UTC-3, temos que converter para UTC e enviar ao event bridge
 		 */
 		ZonedDateTime agendamentoUTC = tempoFinal.atZone(ZoneOffset.ofHours(-3));
-		LocalDateTime agendamentoParaAlerta = agendamentoUTC
-			.withZoneSameInstant(ZoneId.of("UTC"))
-			.toLocalDateTime()
-			.minus(minutos);
+		LocalDateTime agendamentoParaAlerta = agendamentoUTC.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime().minus(minutos);
 
 		return String.format("cron(%s %s %s %s ? %s)",
 			agendamentoParaAlerta.getMinute(),

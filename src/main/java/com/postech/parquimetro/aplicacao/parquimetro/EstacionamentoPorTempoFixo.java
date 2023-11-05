@@ -115,7 +115,9 @@ public class EstacionamentoPorTempoFixo {
 		EstacionamentoPorTempoFixoDTO estacionamentoPorTempoFixoDTO
 	) {
 		Optional<MetodoDePagamento> pagamento = this.pagamentoRepository
-			.findById(estacionamentoPorTempoFixoDTO.metodoDePagamento());
+			.pesquisarMetodoDePagamentoDoCondutor(
+				estacionamentoPorTempoFixoDTO.metodoDePagamento(),
+				estacionamentoPorTempoFixoDTO.condutor());
 
 		MetodoDePagamento pagamentoSelecionado = NaoIniciarOTemporizadorSeOCondutorNaoTiverPagamentosRegistrado
 			.verificar(pagamento);
