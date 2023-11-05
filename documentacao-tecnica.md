@@ -62,13 +62,13 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 
 - Detalhando os passos que a aplicação faz quando marcamos um estacionamento por tempo fixo:
 
-  1° Executamos o endpoint `/api/parquimetro/tempoFixo`, com isso criamos dois eventos do tipo cronjob no event bridge (alertaParaEnviarEmail_ e agendamentoPorTempoFixo_). O evento `alertaParaEnviarEmail_` é focado para enviar um alerta 10 minutos antes do tempo expirar.
+  1° Executamos o endpoint `/api/parquimetro/tempoFixo`, com isso criamos dois eventos do tipo cronjob no event bridge (alertaParaEnviarEmail_ e agendamentoPorTempoFixo_). O evento `alertaParaEnviarEmail_` é focado para enviar um alerta 10 minutos antes do tempo expirar e o evento `agendamentoPorTempoFixo_` envia uma mensagem a fila quando o tempo do estacionamento expirar.
 
-  2° Quando o horário de 10 minutos antes de encerrar o estácionamento o evento enviar uma mensagem a fila de alertas chamada de `postech_enviar_email`.
+  2° Quando "bater" o horário de 10 minutos antes de encerrar o estacionamento o evento enviará uma mensagem a fila de alertas chamada de `postech_enviar_email`.
 
-  3° A aplicação vai ler a mensagem da fila, e enviar um e-email ao usuário e por fim apagará esse evento.
+  3° A aplicação vai ler a mensagem da fila, e enviará um e-email ao usuário alertando que o tempo está se encerrando, e por fim a aplicação apagará esse evento.
 
-  4° Quando o tempo do estácionamento for encerrado, o evento `agendamentoPorTempoFixo_` enviará uma mensagem a fila de encerramento chamada de `postech_remover_evento` que irá enviar o e-mail de confirmação, apagará o evento criado no event bridge e por fim adicionará as informações necessárias no banco de dados.
+  4° Quando o tempo do estácionamento for encerrado, o evento `agendamentoPorTempoFixo_` enviará uma mensagem a fila de encerramento chamada de `postech_remover_evento`, a aplicação vai ler essa mensagem e então enviará um e-mail de confirmação e com a informação do pagamento, então apagaremos o evento criado no event bridge e por fim adicionará as informações necessárias no banco de dados.
 
   5° Se ocorrer até 3 erros durante o processamento da mensagem, enviaremos a mensagem em uma fila DLQ que posteriormente iremos fazer o reprocessamento dessas mensagens.
 
@@ -76,13 +76,15 @@ link para a modelagem do banco de dados: [imagem](https://firebasestorage.google
 
 - Detalhando os passos que a aplicação faz quando marcamos um estacionamento por tempo variável:
 
-  1° Executamos o endpoint `/api/parquimetro/tempoVariavel/iniciar`, com isso criamos 1 evento do tipo intervalo no event bridge (alertaParaEnviarEmail_)
+  1° Executamos o endpoint `/api/parquimetro/tempoVariavel/iniciar`, com isso criamos 1 evento do tipo intervalo no event bridge nomeado como (alertaParaEnviarEmail_)
 
-  2° A cada 60 minutos o evento envia uma mensagem a fila `postech_enviar_email` que a aplicação irá ler essa mensagem e então iremos enviar um e-mail dizendo que o tempo do estácionamento foi renovado
+  2° A cada 60 minutos o evento envia uma mensagem a fila de alertas chamada de `postech_enviar_email` que a aplicação irá ler essa mensagem e então iremos enviará um e-mail dizendo que o tempo do estácionamento foi renovado.
 
   3° Ao executar a url `/api/parquimetro/tempoVariavel/finalizar` a aplicação enviará um e-mail ao usuário com o valor do pagamento, armazenará as informações necessaŕias no banco de dados e por fim apagará o evento no event bridge.
+  
+  4° Se ocorrer até 3 erros durante o processamento da mensagem, enviaremos a mensagem em uma fila DLQ que posteriormente iremos fazer o reprocessamento dessas mensagens.
 
-  4° Veja todo esse processo em funcionamento aqui: [iniciar estacionamento por tempo variavel](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/aplicacao/parquimetro/EstacionamentoPorTempoVariavel.java) e [finalizar estacionamento por tempo variavel](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/aplicacao/parquimetro/FinalizarAgendamentoPorTempoVariavel.java)
+  5° Veja todo esse processo em funcionamento aqui: [iniciar estacionamento por tempo variavel](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/aplicacao/parquimetro/EstacionamentoPorTempoVariavel.java) e [finalizar estacionamento por tempo variavel](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/aplicacao/parquimetro/FinalizarAgendamentoPorTempoVariavel.java)
 
 - Criamos duas fila DLQ para caso haja algum erro de processamento
   1°: postech_remover_evento_dlq
