@@ -66,8 +66,8 @@ Então se o condutor ficar 16 minutos estacionado, ele pagará R$ 1,62.
 Toda o calculo dessa regra está contida dentro da classe [CalcularValorDoPagamento.java](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/dominio/CalcularValorDoPagamento.java)
 
 #### Envio de e-mails quando o estacionamento está próximo de expirar
-Se o condutor escolher o tipo de estácionamento por tempo fixo, quando faltarem **10 minutos** para o tempo se encerrar, vamos enviar um e-mail com a seguinte informação **Falta pouco para se encerrar o tempo do seu estacionamento**
-Se o condutor escolhler o tipo de estacionamento por tempo variavel, a cada **60 minutos** enviaremos um e-mail com a seguinte informação **Acrescimo de 60 minutos no tempo do seu estacionamento** 
+Se o condutor escolher o tipo de estácionamento por tempo fixo, quando faltarem **10 minutos** para o tempo se encerrar, vamos enviar um e-mail com a seguinte informação **"Falta pouco para se encerrar o tempo do seu estacionamento"**
+Se o condutor escolhler o tipo de estacionamento por tempo variavel, a cada **60 minutos** enviaremos um e-mail com a seguinte informação **"Acrescimo de 60 minutos no tempo do seu estacionamento"** 
 
 ## Validações
 - Todos os endpoints estão sendo validados, mas na api `/api/parquimetro/tempoFixo` existe uma validação especial para marcar um estacionamento por tempo fixo. Para evitarmos que o condutor marque um horário antes do horario atual adicionamos os seguintes validadores
