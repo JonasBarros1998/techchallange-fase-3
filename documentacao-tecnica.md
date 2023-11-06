@@ -96,9 +96,16 @@ link para visualizar a modelagem do banco de dados: [imagem](https://firebasesto
   5° Veja todo esse processo em funcionamento aqui: [iniciar estacionamento por tempo variavel](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/aplicacao/parquimetro/EstacionamentoPorTempoVariavel.java) e [finalizar estacionamento por tempo variavel](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/aplicacao/parquimetro/FinalizarAgendamentoPorTempoVariavel.java)
 
 - Criamos duas fila DLQ para caso haja algum erro de processamento
+  
   1°: Fila de origem: postech_remover_evento, Fila DLQ: postech_remover_evento_dlq
   
   2°: Fila de origem: postech_enviar_email, Fila DLQ: postech_enviar_email_dlq
+  
+![SQS AWS](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/AWS-SQS.png?alt=media&token=76e0b05d-c13c-4755-8bdf-32fbad2373dd)
+
+![SQS AWS](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/remover_eventoAWS-SQS.png?alt=media&token=542bc19a-7076-44cc-9f2a-e632e2d94e65)
+
+![SQS AWS](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/SQS-AWS-Detalhes.png?alt=media&token=dc8b4c54-2846-49ab-bf13-f9a6ba674940)
    
 ### Segurança
 - Para criptografia e descriptografia dos dados, estou utilizando o algoritmo AES/CFB/PKCS5Padding, um dos mais seguros atualmente. Também poderia utilizar o padrão de chave pública e chave privada, mas para isso o consumidor teria que enviar a chave pública para nós fazermos a validação e descriptografar dados. Mas dessa forma não é muito habitual comparando com o cenário que estamos desenvolvendo. Não estou utilizando nenhuma lib externa, apenas os recursos do próprio Java. Para escolher esse padrão, tive auxilio das seguintes referências: [Public/Private Keys Vs. Certificates](https://www.baeldung.com/cs/public-private-keys-vs-certificates), [Encryption and decryption of data at blazing speed using Spring Data JPA](https://medium.com/@deependra.chourasia/encryption-and-decryption-of-data-at-blazing-speed-using-spring-data-jpa-a4c36b84588e), [Guide to the Cipher Class](https://www.baeldung.com/java-cipher-class)
