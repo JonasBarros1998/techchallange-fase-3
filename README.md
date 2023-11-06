@@ -4,6 +4,7 @@
 - Os detalhes da entrada e saída de cada endpoint, você verá no arquivo [documentacao.json](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/documentacao.yaml) construído com a especificação openapi 3.0
 - Todos os vídeos gravados, foram utilizado a aplicação enviada ao ECS e se conectando ao RDS PostgreSQL, Event Bridge e AWS SQS
 - Todos os vídeos gravados foram adicionados os links no PDF que foi enviado na plataforma da FIAP
+- O código foi enviado sem as variáveis de ambiente, mas existe um arquivo chamado `/resources/application-example.yml` que contém a estrtura que utilizamos na aplicação
 
 ## Inicio rápido
 #### Para agendar rapidamente um estacionamento, execute em sequência os seguintes endpoints abaixo
