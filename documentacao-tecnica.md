@@ -47,9 +47,9 @@ link para visualizar a modelagem do banco de dados: [imagem](https://firebasesto
   Mas para uma aplicação realmente escalável, poderíamos mudar os recursos. **Optaria por utilizar um banco aurora serveless(Compatível com PostgreSQL) com no mínimo 2GB de ACU e no máximo 6GB de ACU, com implantação multi-AZ e por fim utilizaria um RDS Proxy para diminuir o tempo de conexão entre aplicação e o banco de dados.**
 
 ### Arquitetura da aplicação
-![arquitetura da aplicação](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/parquimetro_arquitetura.png?alt=media&token=084afca0-aa1f-4577-8cce-9a1ce4e5b6f1)
+![arquitetura da aplicação](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/arquitetura.png?alt=media&token=c11e0039-78d9-4eff-b37d-25349ffd3424)
 
-[link da arquitetura](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/parquimetro_arquitetura.png?alt=media&token=084afca0-aa1f-4577-8cce-9a1ce4e5b6f1)
+[link da arquitetura](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/arquitetura.png?alt=media&token=c11e0039-78d9-4eff-b37d-25349ffd3424)
 
 - Utilizamos os seguintes recursos da AWS: ECS, Fargate, SQS para envio de alertas e finalização do agendamento e o Event Bridge.
 - Utilizaria exatamente essa arquitetura para uma aplicação escalável, porém com algumas ressalvas. Aumentaria o número de containers de 1 para pelo menos 6 containers, incluiria também um API Gateway, 
@@ -68,6 +68,8 @@ link para visualizar a modelagem do banco de dados: [imagem](https://firebasesto
   1° enviar e-mail (postech_enviar_email): Apenas para alerta, utlizada tanto para estacionamento por tempo fixo, quanto para estacionamento por tempo variável [envio de alertas ao consumidor](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/view/controller/EnviarEmailSqsListener.java)
   
   2° finalização (postech_remover_evento): Utilizado apenas para o estacionamento por tempo fixo, que irá enviar a informação para a aplicação quando o tempo do estacionamento já expirou. [finalizar agendamentos](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/view/controller/FinalizarAgendamentosListener.java)  
+
+- Para envio de e-mail, estamos utilizando o Amazon simple e-mail service, como como ficou a implamtação [envio de e-mail](https://github.com/JonasBarros1998/techchallange-fase-3/blob/main/src/main/java/com/postech/parquimetro/infra/email/Email.java)
 
 ### Detalhando os passos que a aplicação faz quando marcamos um estacionamento por tempo fixo:
 
@@ -169,5 +171,5 @@ link para visualizar a modelagem do banco de dados: [imagem](https://firebasesto
 ```
 
 ### SDK 2.x vs SDK 1.x
-- Ao dercorrer do tempo houveram algumas atualizações nas SDKs que a AWS disponibiliza para o Java. Optei por utlizar a SDK 2.x porque evita de ficar trabalhando com usuários e chaves na AWS. Assim posso trabalhar criando as políticas com apenas os recursos em que eu específicar e anexar cada uma dessas políticas dentro dos serviços que a minha aplicação estará utilizando. 
+- Ao dercorrer do tempo houveram algumas atualizações nas SDKs que a AWS disponibiliza para o Java. Optei por utlizar a SDK 2.x porque evita de ficar trabalhando com usuários e chaves na AWS. Assim posso trabalhar criando as políticas com apenas os recursos em que eu específicar e anexar cada uma dessas políticas dentro dos serviços que a minha aplicação estará utilizando.
  
