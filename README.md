@@ -104,7 +104,7 @@ a url `GET: /api/pagamentos/{dondutor_id}` é chamada pelo consumidor. Por exemp
 ## Vídeos
 1° vídeo: validações e regras de negócio e iniciando um estacionamento por tempo fixo
 
-2° vídeo: iniciando o estacionamento por tempo variável, visualizando regra de negócio e confirmando estacionamento por tempo fixo
+2° vídeo: iniciando o estacionamento por tempo variável e confirmando estacionamento por tempo fixo
 
 3° vídeo: confirmando o estacionamento por tempo variável
 
